@@ -28,7 +28,7 @@ public class SubjectUpdateAction extends Action {
 
 				// DBからデータ取得 3
 				// 学生の詳細データを取得
-				subject = subjectDao.getCd(cd);
+				subject = subjectDao.get(cd);
 
 				// ビジネスロジック 4
 				name = subject.getName();
