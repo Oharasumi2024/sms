@@ -1,10 +1,10 @@
 package scoremanager.main;
 
-import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
@@ -28,7 +28,7 @@ public class SubjectUpdateAction extends Action {
 
 				// DBからデータ取得 3
 				// 学生の詳細データを取得
-				subject = subjectDao.get(cd);
+				subject = subjectDao.getCd(cd);
 
 				// ビジネスロジック 4
 				name = subject.getName();
