@@ -25,10 +25,12 @@ public class SubjectUpdateAction extends Action {
 
 				// リクエストパラメーターの取得 2
 				cd = req.getParameter("cd");
+				
 
 				// DBからデータ取得 3
 				// 学生の詳細データを取得
 				subject = subjectDao.get(cd);
+				
 
 				// ビジネスロジック 4
 				name = subject.getName();
