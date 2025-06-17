@@ -27,7 +27,7 @@ public class SubjectUpdateExecuteAction extends Action {
 
 		// ビジネスロジック 4
 		//無し
-		// studentに学生情報をセット
+		// subdentに学生情報をセット
 		subject.setCd(cd);
 		subject.setName(name);
 
