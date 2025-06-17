@@ -1,3 +1,5 @@
+
+
 package bean;
 
 import java.io.Serializable;
@@ -60,3 +62,11 @@ public void putPoint(int value , int key){
 }
 
 }
+
+
+
+
+
+
+
+
