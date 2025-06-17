@@ -111,10 +111,106 @@ public class SubjectDao extends Dao {
 	}
 
 	public boolean save(Subject subject)throws Exception {
-		return false;
+		//コネクションを確立
+		Connection connection=getConnection();
+		//プリパレ
+		PreparedStatement statement=null;
+		//実行件数
+		int count=0;
+
+		try {
+			//DBから科目を取得
+			Subject old=get(subject.getCd(),subject.getSchool());
+			if (old==null) {
+				//科目がnullだった場合insert
+				statement=connection.prepareStatement(
+						"insert into subject(school_cd,cd,name) values(?,?,?)");
+				//プリパレに値をバインド
+				statement.setString(1, subject.getSchool().getCd());
+				statement.setString(2, subject.getCd());
+				statement.setString(3, subject.getName());
+			}else {
+				//nullじゃなかった場合update
+				statement=connection.prepareStatement(
+						"update subject set name=? where school_cd=? snd cd=?");
+				//値をバインド
+				statement.setString(1, subject.getName());
+				statement.setString(2, subject.getSchool().getCd());
+				statement.setString(3, subject.getCd());
+			}
+			//プリパレの実行
+			count=statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}finally {
+			// プリペアードステートメントを閉じる
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+			// コネクションを閉じる
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+		if (count>0) {
+			//実行件数が1件以上の時
+			return true;
+		}else {
+			//実行件数が０件の時
+			return false;
+		}
 	}
 
 	public boolean delete(Subject subject)throws Exception {
-		return false;
+		//コネクションを確立
+		Connection connection=getConnection();
+		//プリパレ
+		PreparedStatement statement=null;
+		//実行件数
+		int count=0;
+
+		try {
+			//プリパレ
+			statement=connection.prepareStatement(
+					"delete from subject where school_cd=? and cd=?");
+			statement.setString(1, subject.getSchool().getCd());
+			statement.setString(2, subject.getCd());
+			//プリパレの実行
+			count=statement.executeUpdate();
+		}catch(Exception e) {
+			throw e;
+		}finally {
+			// プリペアードステートメントを閉じる
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+			// コネクションを閉じる
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+		if (count>0) {
+			//実行件数が1件以上の時
+			return true;
+		}else {
+			//実行件数が０件の時
+			return false;
+		}
 	}
 }
