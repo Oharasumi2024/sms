@@ -32,7 +32,7 @@
 					</table>
 				</c:when>
 
-			</c:choose>
+			</c:choose>	
 
 
 </c:import>
