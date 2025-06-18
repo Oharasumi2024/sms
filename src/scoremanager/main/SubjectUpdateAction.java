@@ -18,6 +18,7 @@ public class SubjectUpdateAction extends Action {
 				Teacher teacher = (Teacher)session.getAttribute("user");
 
 				String cd = ""; // 科目コード
+				String school = "";
 				String name= ""; // 科目名
 
 				Subject subject = new Subject();
@@ -25,18 +26,19 @@ public class SubjectUpdateAction extends Action {
 
 				// リクエストパラメーターの取得 2
 				cd = req.getParameter("cd");
-				
+
 
 				// DBからデータ取得 3
-				// 学生の詳細データを取得
-				subject = subjectDao.get(cd);
-				
+				// 科目の詳細データを取得
+				subject = subjectDao.get(cd,subject.getSchool());
+
 
 				// ビジネスロジック 4
 				name = subject.getName();
 
+
 				// レスポンス値をセット 6
-				// リクエストに学生番号をセット
+				// リクエストに科目情報をセット
 				req.setAttribute("cd", cd);
 				// リクエストに氏名をセット
 				req.setAttribute("name", name);

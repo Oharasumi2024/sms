@@ -25,7 +25,7 @@ public class SubjectDeleteExecuteAction extends Action {
 
 		// ビジネスロジック 4
 		//無し
-		// subjectに学生情報をセット
+		// subjectに科目情報をセット
 		subject.setCd(subject_cd);
 		subject.setName(subject_name);
 

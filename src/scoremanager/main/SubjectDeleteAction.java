@@ -9,7 +9,7 @@ public class SubjectDeleteAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+		
 
 	}
 

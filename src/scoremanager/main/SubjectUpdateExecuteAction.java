@@ -1,5 +1,8 @@
 package scoremanager.main;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +20,7 @@ public class SubjectUpdateExecuteAction extends Action {
 		String name = "";
 		Subject subject = new Subject();
 		SubjectDao subjectDao = new SubjectDao();
+		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 
 		// リクエストパラメーターの取得 2
 		cd = req.getParameter("cd");
@@ -26,8 +30,32 @@ public class SubjectUpdateExecuteAction extends Action {
 		// なし
 
 		// ビジネスロジック 4
-		//無し
-		// subdentに学生情報をセット
+		// 科目存在チェック
+        if (errors.isEmpty()) {
+            Subject existingSubject = subjectDao.get(cd, subject.getSchool());
+            if (existingSubject == null) {
+                errors.put("cd", "指定された科目コードは存在しません");
+            }
+        }
+		if (cd == null || cd.trim().isEmpty()) {
+            errors.put("cd", "このフィールドを入力してください");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            errors.put("name", "このフィールドを入力してください");
+        }
+
+
+
+
+
+        if (!errors.isEmpty()) {
+            req.setAttribute("errors", errors);
+            req.setAttribute("cd", cd);
+            req.setAttribute("name", name);
+            req.getRequestDispatcher("subject_update.jsp").forward(req, res);
+            return;
+        }
+		// subjectに科目情報をセット
 		subject.setCd(cd);
 		subject.setName(name);
 
