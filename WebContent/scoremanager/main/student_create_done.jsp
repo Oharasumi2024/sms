@@ -13,6 +13,7 @@
 			<div id="wrap_box">
 				<p class="text-center" style="background-color:#8cc3a9">登録が完了しました</p>
 
+
 				<br>
 				<br>
 				<br>
