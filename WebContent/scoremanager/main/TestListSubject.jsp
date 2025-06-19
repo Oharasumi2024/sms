@@ -4,7 +4,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/common/base.jsp" >
 
-			<c:choose>
+	<c:param name="scripts"></c:param>
+
+	<c:param name="content">
+		<section class="me=4">
+
+				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
+
+				<div class="col-2 text-center">
+						<button class="btn btn-secondary" id="filter-button">絞込み</button>
+					</div>
+					<div class="mt-2 text-warning">${errors.get("f1") }</div>
+				</div>
+							<c:choose>
 				<c:when test="${students.size()>0 }">
 					<div>科目：${students.size() }件</div>
 					<table class="table table-hover">
@@ -19,20 +31,18 @@
 						<c:forEach var="student" items="${students}">
 							<tr>
 								<td>${student.entYear }</td>
-								<td>${student.no }</td>
-								<td>${student.name }</td>
 								<td>${student.classNum }</td>
+								<td>${student.studentNo }</td>
+								<td>${student.studentName }</td>
+								<td>${student.points}</td>
 								<td class="text-center">
-
-
 								</td>
 								<td></td>
 							</tr>
 						</c:forEach>
 					</table>
 				</c:when>
-
-			</c:choose>	
-
-
+			</c:choose>
+	</section>
+	</c:param>
 </c:import>
