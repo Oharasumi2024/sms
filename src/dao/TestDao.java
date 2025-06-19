@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.Subject;
-
 import bean.School;
 import bean.Student;
+import bean.Subject;
 import bean.Test;
 
 public class TestDao extends Dao {
@@ -34,8 +33,6 @@ public class TestDao extends Dao {
 			statement.setInt(1, no);
 			//プリペアードステートメントを実行
 			ResultSet resultSet = statement.executeQuery();
-			//学校DAO初期化
-			SchoolDao schoolDao = new SchoolDao();
 
 			//結果が存在すれば値をセット
 			if (resultSet.next()) {
@@ -110,7 +107,7 @@ public class TestDao extends Dao {
 			statement.setString(1, school.getCd());
 			statement.setInt(2, entYear);
 			statement.setString(3, classNum);
-			statement.setString(4, subject.getCD());
+			statement.setString(4, subject.getCd());
 			statement.setInt(5, num);
 			resultSet = statement.executeQuery();
 			list = postFilter(resultSet, school);
