@@ -11,27 +11,26 @@ public class SubjectDeleteExecuteAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String subject_cd = "";
-		String subject_name = "";
-		Subject subject = new Subject();
-		SubjectDao subjectDao = new SubjectDao();
+		 String subject_cd = req.getParameter("subject_cd");
+	        String subject_name = req.getParameter("subject_name");
 
-		// リクエストパラメーターの取得 2
-		subject_cd = req.getParameter("subject_cd");
-		subject_name = req.getParameter("subject_name");
+	        // 空チェック
+	        if (subject_cd == null || subject_cd.isEmpty()) {
+	            // エラー処理（例: エラーメッセージを設定して戻る）
+	            req.setAttribute("error", "科目コードが入力されていません。");
+	            req.getRequestDispatcher("subject_delete.jsp").forward(req, res);
+	            return;
+	        }
 
-		// DBからデータ取得 3
-		// なし
+	        // Subjectオブジェクトにセット
+	        Subject subject = new Subject();
+	        subject.setCd(subject_cd);
+	        subject.setName(subject_name);
 
-		// ビジネスロジック 4
-		//無し
-		// subjectに科目情報をセット
-		subject.setCd(subject_cd);
-		subject.setName(subject_name);
-
-		// 削除を保存
-		subjectDao.save(subject);
-		// JSPへフォワード 6
+	        // SubjectDaoで削除処理
+	        SubjectDao subjectDao = new SubjectDao();
+	        subjectDao.delete(subject); // deleteメソッドを仮定
+		// JSPへフォワード
 		req.getRequestDispatcher("subject_delete_done.jsp").forward(req, res);
 
 	}
