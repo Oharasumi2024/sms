@@ -3,9 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,43 +13,50 @@ import bean.Subject;
 import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
-    // ベースとなる SELECT 文
-    private String baseSql = "select * from test where";
-    private List<TestListSubject> postFilter(ResultSet resultSet) throws Exception {
-    	//リストを初期化
-        List<TestListSubject> list = new ArrayList<>();
-        try {
-        	//MAPを作成
-        	Map<Integer,Integer> points = new HashMap<>();
-        	//リザルトセットを全権走査
-        	while (resultSet.next()) {
-        	//インスタンスを初期化
-            TestListSubject tls = new TestListSubject();
-            //tlsインスタンスに検索結果をセット
-            tls.setStudentNo(resultSet.getString("student_no"));
-            tls.setStudentName(resultSet.getString("student_name"));
-            tls.setClassNum(resultSet.getString("classnum"));
-            tls.setPoints(resultSet.getInt("point"));
-            //リストに追加
-            list.add(tls);
-        	}
-        } catch (SQLException | NullPointerException e) {
-        		e.printStackTrace();
+    private static final String BASE_SQL =
+        "SELECT student_no, student_name, classnum, no, point "
+      + "FROM test WHERE ";
+
+    private List<TestListSubject> postFilter(ResultSet rs) throws Exception {
+        // student_no をキーに、TestListSubject を一意に保持する Map
+        Map<String, TestListSubject> temp = new LinkedHashMap<>();
+
+        while (rs.next()) {
+            String stuNo   = rs.getString("student_no");
+            TestListSubject tls = temp.get(stuNo);
+            if (tls == null) {
+                // 初登場の生徒なら bean を作成＆初期化
+                tls = new TestListSubject();
+                tls.setStudentNo(stuNo);
+                tls.setStudentName(rs.getString("student_name"));
+                tls.setClassNum(rs.getString("classnum"));
+                // Map プロパティも初期化しておく
+                tls.setPoints(new LinkedHashMap<>());
+                temp.put(stuNo, tls);
+            }
+            // Map にテスト番号→点数を追加
+            int testNo  = rs.getInt("no");
+            int point   = rs.getInt("point");
+            tls.getPoints().put(testNo, point);
         }
-        return list;
+        // Map の値だけをリスト化して返却
+        return new ArrayList<>(temp.values());
     }
 
-    public List<TestListSubject> filter(int entYear, String classNum, Subject subject, School school) throws Exception {
-        //リストを初期化
-    	List<TestListSubject> list = new ArrayList<>();
-    	//コネクションを確立
-    	Connection connection = getConnection();
-        String condition = "ent_year = ? AND class_num = ? "
-                         + "AND subject_cd = ? AND school_cd = ? ";
-        String order     = "ORDER BY student_no";
+    public List<TestListSubject> filter(
+            int entYear,
+            String classNum,
+            Subject subject,
+            School school) throws Exception {
+
+        String condition =
+            "ent_year = ? AND class_num = ? "
+          + "AND subject_cd = ? AND school_cd = ? ";
+        String order = "ORDER BY student_no";
 
         try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(baseSql + condition + order)) {
+             PreparedStatement ps = conn.prepareStatement(
+                 BASE_SQL + condition + order)) {
 
             ps.setInt(1, entYear);
             ps.setString(2, classNum);
@@ -58,9 +64,8 @@ public class TestListSubjectDao extends Dao {
             ps.setString(4, school.getCd());
 
             try (ResultSet rs = ps.executeQuery()) {
-                list = postFilter(rs);
+                return postFilter(rs);
             }
         }
-        return list;
     }
 }
