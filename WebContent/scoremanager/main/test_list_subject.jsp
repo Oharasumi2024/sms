@@ -17,9 +17,8 @@
 					</div>
 					<div class="mt-2 text-warning">${errors.get("f1") }</div>
 				</div>
-							<c:choose>
-				<c:when test="${students.size()>0 }">
-					<div>科目：${students.size() }件</div>
+
+
 					<table class="table table-hover">
 						<tr>
 							<th>入学年度</th>
@@ -42,8 +41,6 @@
 							</tr>
 						</c:forEach>
 					</table>
-				</c:when>
-			</c:choose>
 	</section>
 	</c:param>
 </c:import>

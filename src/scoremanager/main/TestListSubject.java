@@ -47,7 +47,7 @@ public class TestListSubject extends Action {
 			entYearStr = req.getParameter("f1");
 			classNum = req.getParameter("f2");
 			isAttendStr = req.getParameter("f3");
-
+            
 			// ビジネスロジック 4
 			if (entYearStr != null) {
 				// 数値に変換
