@@ -39,8 +39,6 @@ public class SubjectDeleteAction extends Action {
                 req.setAttribute("error", "学校情報が取得できませんでした。");
             }
         }
-
-
         // JSPにフォワード
         req.getRequestDispatcher("subject_delete.jsp").forward(req, res);
 
