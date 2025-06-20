@@ -12,14 +12,13 @@
 	<c:param name="content">
 		<section class="me=4">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績参照</h2>
-			<form method="get" action=?>
-				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
-				<div>
-					<div class="col-4">
-						<p>科目情報</p>
+		<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
+			<form method="get" action="TestListSubjectExecute.action">
+				<div class="row">
+					<div class="form col-2" style="display:flex; justify-content:center; align-items:center;">
+						<p style="margin: auto">科目情報</p>
 					</div>
-
-					<div class="col-4">
+					<div class="form col-2">
 						<label class="form-label" for="student-f1-select">入学年度</label>
 						<select class="form-select" id="student-f1-select" name="f1">
 							<option value="0">--------</option>
@@ -30,7 +29,7 @@
 						</select>
 					</div>
 
-					<div class="col-4">
+					<div class="form col-2">
 						<label class="form-label" for="student-f2-select">クラス</label>
 						<select class="form-select" id="student-f2-select" name="f2">
 							<option value="0">--------</option>
@@ -41,7 +40,7 @@
 						</select>
 					</div>
 
-					<div class="col-4">
+					<div class=" form col-4">
 						<label class="form-label" for="student-f3-select">科目</label>
 						<select class="form-select" id="student-f3-select" name="f3">
 							<option value="0">--------</option>
@@ -51,67 +50,30 @@
 							</c:forEach>
 						</select>
 					</div>
-					<div class="col-2 text-center">
-						<button class="btn btn-secondary" id="button_1" formaction="TestListSubjectExecute.action">検索</button>
+					<div class="form col-2 text-center" style="display:flex; justify-content:center; align-items:center;">
+						<button class="btn btn-secondary" id="button_1">検索</button>
 					</div>
 					<div><input type="hidden" name="f" value="sj"></div>
 				</div>
-				<div>
-					<div>
-						<p>学生情報</p>
+			</form>
+			<p align="center" style="color: #dee2e6">----------------------------------------------------------------------------------------------------</p>
+			<form method="get" action="TestListStudentExecute.action">
+				<div class="row">
+					<div class="col-2" style="display:flex; justify-content:center; align-items:center;">
+						<p style="margin: auto">学生情報</p>
 					</div>
-					<div>
+					<div class="col-4">
 						<label>学生番号</label>
-							<input type="text" id="f4" name="f4" value="${f4 }" placeholder="学生番号を入力してください" />
+						<input class="form-control" size="25" type="text" id="f4" name="f4" value="${f4 }" required maxlength="10" placeholder="学生番号を入力してください" />
 					</div>
-					<div class="col-2 text-center">
-						<button class="btn btn-secondary" id="button_2" formaction="TestListStudentExecute.action">検索</button>
+					<div class="col-2 text-center" style="display:flex; justify-content:center; align-items:center;">
+						<button class="btn btn-secondary" id="button_2">検索</button>
 					</div>
-					<div><input type="hidden" name="f" value="st"></div>
-				</div>
+					<div class="col-4"><input type="hidden" name="f" value="st"></div>
 				</div>
 			</form>
-
-			<c:choose>
-				<c:when test="${students.size()>0 }">
-					<div>検索結果：${students.size() }件</div>
-					<table class="table table-hover">
-						<tr>
-							<th>入学年度</th>
-							<th>学生番号</th>
-							<th>氏名</th>
-							<th>クラス</th>
-							<th class="text-center">在学中</th>
-							<th></th>
-							<th></th>
-						</tr>
-						<c:forEach var="student" items="${students }">
-							<tr>
-								<td>${student.entYear }</td>
-								<td>${student.no }</td>
-								<td>${student.name }</td>
-								<td>${student.classNum }</td>
-								<td class="text-center">
-									<%-- 在学フラグがたっている場合「◯」それは以外は「×」を表示 --%>
-									<c:choose>
-										<c:when test="${student.isAttend() }">
-											◯
-										</c:when>
-										<c:otherwise>
-											×
-										</c:otherwise>
-									</c:choose>
-								</td>
-								<td><a href="StudentUpdate.action?no=${student.no }">変更</a></td>
-							</tr>
-						</c:forEach>
-					</table>
-				</c:when>
-				<c:otherwise>
-					<div><p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p></div>
-				</c:otherwise>
-			</c:choose>
-
+			</div>
+			<div><p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p></div>
 		</section>
 	</c:param>
 </c:import>
