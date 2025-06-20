@@ -27,8 +27,8 @@ public class TestListSubject extends Action {
 
 		// DBからデータ取得 3
 		// なし
-       
-		
+
+
 		// ビジネスロジック 4
 		//無し
 		// subdentに学生情報をセット
@@ -42,10 +42,10 @@ public class TestListSubject extends Action {
 		// なし
 
 		// JSPへフォワード 7
-		req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+		req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
 
 	}
 
-
+}
 
 

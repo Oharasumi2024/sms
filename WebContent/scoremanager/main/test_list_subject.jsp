@@ -12,6 +12,7 @@
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 
 				<div class="col-2 text-center">
+
 						<button class="btn btn-secondary" id="filter-button">絞込み</button>
 					</div>
 					<div class="mt-2 text-warning">${errors.get("f1") }</div>
