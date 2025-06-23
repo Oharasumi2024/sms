@@ -15,11 +15,11 @@
 			<form action="SubjectUpdateExecute.action" method="get">
 				<div>
 					<label class="mx-auto py-2" for="cd">科目コード</label><br>
-					<input class="form-control" type="text" id="cd" name="cd" value="${subject_cd }" readonly placeholder="選択された科目の科目コード"/>
+					<input class="form-control" type="text" id="cd" name="cd" value="${subject_cd }" readonly />
 				</div>
 				<div class="mx-auto py-2">
 					<label for="name">科目名</label><br>
-					<input class="form-control" type="text" id="name" name="name" value="${subject_name }" required maxlength="20" placeholder="選択された科目の科目名"/>
+					<input class="form-control" type="text" id="name" name="name" value="${subject_name }" required maxlength="20" />
 				</div>
 				<div class="mx-auto py-2">
 					<input class="btn btn-primary" type="submit" value="変更"/>
