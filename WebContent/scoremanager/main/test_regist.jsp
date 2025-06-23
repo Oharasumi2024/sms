@@ -10,7 +10,7 @@ pageEncoding="UTF-8" %>
 	<c:param name="scripts"></c:param>
 	<c:param name="content">
 		<section class="me=4">
-			<h2>成績検索画面</h2>
+			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績検索画面</h2>
 
 			<form action="SearchServlet" method="get">
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
