@@ -44,6 +44,7 @@ public class StudentUpdateAction extends Action {
 		class_num = student.getClassNum();
 		isAttend = student.isAttend();
 
+
 		// レスポンス値をセット 6
 		// リクエストに入学年度をセット
 		req.setAttribute("ent_year", ent_year);
