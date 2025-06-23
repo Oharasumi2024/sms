@@ -18,7 +18,7 @@
 					<div class="mt-2 text-warning">${errors.get("f1") }</div>
 				</div>
 
-                  <div>科目</div>
+                  	<div>科目：${students.size() }件</div>
 					<table class="table table-hover">
 						<tr>
 							<th>入学年度</th>
