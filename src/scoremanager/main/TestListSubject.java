@@ -27,7 +27,7 @@ public class TestListSubject extends Action {
 
 
 
-			HttpSession session = req.getSession();
+			HttpSession session=req.getSession();
 			Teacher teacher = (Teacher)session.getAttribute("user");
 
 			// ローカル変数の指定 1
@@ -47,7 +47,7 @@ public class TestListSubject extends Action {
 			entYearStr = req.getParameter("f1");
 			classNum = req.getParameter("f2");
 			isAttendStr = req.getParameter("f3");
-            
+
 			// ビジネスロジック 4
 			if (entYearStr != null) {
 				// 数値に変換
@@ -92,7 +92,7 @@ public class TestListSubject extends Action {
 			// リクエストにクラス番号をセット
 			req.setAttribute("f2", classNum);
 			// 在学フラグが送信されていた場合
-			if (isAttendStr != null) {
+			if (isAttendStr != null){
 				// 在学フラグを立てる
 				isAttend = true;
 				// リクエストに在学フラグをセット
