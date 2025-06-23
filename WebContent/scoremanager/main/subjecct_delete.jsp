@@ -17,7 +17,7 @@
                     <input type="text" name="subject_name" value="${subject_name}" readonly><br>
                 </div>
                 <div class="mx-auto py-2">
-                    <input class="btn btn-primary" type="submit" name="delete" value="削除">
+                    <input class="btn btn-primary" type="submit" value="削除">
                 </div>
             </form>
             <a href="SubjectList.action">戻る</a>

@@ -30,7 +30,7 @@ public class SubjectUpdateAction extends Action {
 
 				// DBからデータ取得 3
 				// 科目の詳細データを取得
-				subject = subjectDao.get(cd,subject.getSchool());
+				subject = subjectDao.get(cd,teacher.getSchool());
 
 
 				// ビジネスロジック 4
