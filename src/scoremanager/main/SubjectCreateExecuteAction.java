@@ -39,7 +39,7 @@ public class SubjectCreateExecuteAction extends Action {
 				// リクエストにエラーメッセージをセット
 				req.setAttribute("errors", errors);
 			} else {
-				// studentに学生情報をセット
+				// subjectに学生情報をセット
 				subject.setCd(subject_cd);
 				subject.setName(subject_name);
 				subject.setSchool(teacher.getSchool());
@@ -49,9 +49,9 @@ public class SubjectCreateExecuteAction extends Action {
 			}
 		}
 
-		// リクエストに学生番号をセット
+		// リクエストに科目コードをセット
 		req.setAttribute("cd", subject_cd);
-		// リクエストに氏名をセット
+		// リクエストに科目名をセット
 		req.setAttribute("name", subject_name);
 
 		if (errors.isEmpty()) { // エラーメッセージがない場合
