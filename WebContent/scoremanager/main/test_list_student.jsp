@@ -20,6 +20,7 @@
 
                   	<div>科目：${students.size() }件</div>
 					<table class="table table-hover">
+
 						<tr>
 							<th>入学年度</th>
 							<th>クラス</th>
