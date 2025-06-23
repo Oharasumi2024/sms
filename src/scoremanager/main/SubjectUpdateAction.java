@@ -18,7 +18,6 @@ public class SubjectUpdateAction extends Action {
 				Teacher teacher = (Teacher)session.getAttribute("user");
 
 				String cd = ""; // 科目コード
-				String school = "";
 				String name= ""; // 科目名
 
 				Subject subject = new Subject();
