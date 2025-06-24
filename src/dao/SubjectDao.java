@@ -211,4 +211,10 @@ public class SubjectDao extends Dao {
 			return false;
 		}
 	}
+
+
+	public Subject getInt(String cd) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }

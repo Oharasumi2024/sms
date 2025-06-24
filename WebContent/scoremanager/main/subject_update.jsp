@@ -15,15 +15,14 @@
 			<form action="StudentUpdateExecute.action" method="get">
 				<div>
 					<label class="mx-auto py-2" for="cd">科目コード</label><br>
-					<div class="error-message ${not empty errorMessage ? 'visible' : ''}">${errorMessage}
-						<p>科目が存在していません</p>
-					</div>
-					<input class="border border-0 ps-3" type="text" id="cd" name="cd" value="${cd }" readonly />
+					<input class="form-control" type="text" id="cd" name="cd" value="${subject_cd }" readonly placeholder="科目コードを入力してください" />
 				</div>
+				<div class="mt-2 text-warning">${errors.get("1") }</div>
 				<div class="mx-auto py-2">
 					<label for="name">科目名</label><br>
-					<input class="form-control" type="text" id="name" name="name" value="${name }" required maxlength="30" />
+					<input class="form-control" type="text" id="name" name="name" value="${subject_name }" required maxlength="20" placeholder="科目名を入力してください" />
 				</div>
+				<div class="mt-2 text-warning">${errors.get("2") }</div>
 				<div class="mx-auto py-2">
 					<input class="btn btn-primary" type="submit" name="login" value="変更"/>
 				</div>
