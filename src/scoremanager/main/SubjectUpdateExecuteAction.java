@@ -14,63 +14,50 @@ import tool.Action;
 
 public class SubjectUpdateExecuteAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		// ローカル変数の指定 1
-		HttpSession session = req.getSession(); // セッション
-		Teacher teacher = (Teacher)session.getAttribute("user");
-		String cd = "";
-		String name = "";
-		Subject subject = new Subject();
-		SubjectDao subjectDao = new SubjectDao();
-		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
+       HttpSession session = req.getSession();
+       Teacher teacher = (Teacher) session.getAttribute("user");
 
-		// リクエストパラメーターの取得 2
-		cd = req.getParameter("cd");
-		name = req.getParameter("name");
+        String cd = req.getParameter("cd");
+        String name = req.getParameter("name");
 
-		// DBからデータ取得 3
-		// なし
+        SubjectDao subjectDao = new SubjectDao();
+        Map<String, String> errors = new HashMap<>();
+
+        cd=req.getParameter("cd");
+        name=req.getParameter("name");
 
 
-
-		// ビジネスロジック 4
-		// 科目存在チェック
-        if (errors.isEmpty()) {
-            Subject existingSubject = subjectDao.get(cd, subject.getSchool());
+        // 科目の存在チェック
+       /*
+        	if (errors.isEmpty()) {
+            Subject existingSubject = subjectDao.get(cd, teacher.getSchool());
             if (existingSubject == null) {
-                errors.put("cd", "指定された科目コードは存在しません");
+                errors.put("cd", "科目コードは存在しません");
             }
         }
-		if (cd == null || cd.trim().isEmpty()) {
-            errors.put("cd", "このフィールドを入力してください");
-        }
-        if (name == null || name.trim().isEmpty()) {
-            errors.put("name", "このフィールドを入力してください");
-        }
+        */
 
-        if (!errors.isEmpty()) {
+        // エラーがあれば戻す
+        /*if (!errors.isEmpty()) {
             req.setAttribute("errors", errors);
             req.setAttribute("cd", cd);
             req.setAttribute("name", name);
             req.getRequestDispatcher("subject_update.jsp").forward(req, res);
             return;
-        }
-		// subjectに科目情報をセット
-		subject.setCd(cd);
-		subject.setName(name);
-		subject.setSchool(teacher.getSchool());
+        }*/
 
-		// 変更内容を保存
-		subjectDao.save(subject);
+        // 科目情報を更新
+        Subject subject = new Subject();
+        subject.setCd(cd);
+        subject.setName(name);
+        subject.setSchool(teacher.getSchool());
 
-		// レスポンス値をセット 6
-		// なし
+        subjectDao.save(subject);
 
-		// JSPへフォワード 7
-		req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
-
-	}
-
+        // 完了画面へ遷移
+        req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+    }
 }
