@@ -1,6 +1,7 @@
 package scoremanager.main;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Student;
+import bean.Subject;
 import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
@@ -37,8 +39,40 @@ public class TestListAction extends Action {
 		ClassNumDao classNumDao = new ClassNumDao(); // クラス番号Daoを初期化
 		SubjectDao subjectDao=new SubjectDao();//科目DAOを初期化
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
+		boolean isAttend=false;//在学フラグ
+
+		//リクエストパラメーターの取得
+		entYearStr=req.getParameter("f1");
+		classNum=req.getParameter("f2");
+		subject=req.getParameter("f3");
+		student_no=req.getParameter("f4");
+
+		if (entYearStr != null) {
+			entYear=Integer.parseInt("entYearStr");
+		}
+		// リストを初期化
+		List<Integer> entYearSet = new ArrayList<>();
+		// 10年前から1年後まで年をリストに追加
+		for (int i = year - 10; i < year + 1; i++) {
+			entYearSet.add(i);
+		}
+		// DBからデータ取得 3
+		// ログインユーザーの学校コードをもとにクラス番号の一覧を取得
+		List<String> list = classNumDao.filter(teacher.getSchool());
+
+		List<Subject> list2=subjectDao.filter(teacher.getSchool());
 
 
+
+		req.setAttribute("f1", entYear);
+		req.setAttribute("f2", classNum);
+		req.setAttribute("f3", subject);
+		req.setAttribute("f4", student_no);
+		req.setAttribute("class_num_set", list);
+		req.setAttribute("ent_year_set", entYearSet);
+		req.setAttribute("subject_set", list2);
+
+		req.getRequestDispatcher("test_list.jsp").forward(req, res);
+
+		}
 	}
-
-}
