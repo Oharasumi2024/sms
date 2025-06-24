@@ -19,7 +19,7 @@ public class SubjectDeleteAction extends Action {
         if (subject_cd != null && !subject_cd.isEmpty()) {
             // セッションからSchoolを取得（ログイン中の学校）
             HttpSession session = req.getSession();
-            School school = (School) session.getAttribute("school"); // schoolがセッションに保存されている前提
+            School school = (School) session.getAttribute("school"); 
 
             if (school != null) {
                 // SubjectDaoで対象データを取得
