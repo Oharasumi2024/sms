@@ -130,7 +130,7 @@ public class SubjectDao extends Dao {
 			}else {
 				//nullじゃなかった場合update
 				statement=connection.prepareStatement(
-						"update subject set name=? where school_cd=? snd cd=?");
+						"update subject set name=? where school_cd=? and cd=?");
 				//値をバインド
 				statement.setString(1, subject.getName());
 				statement.setString(2, subject.getSchool().getCd());
