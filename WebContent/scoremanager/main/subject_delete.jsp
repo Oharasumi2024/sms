@@ -11,9 +11,8 @@
         </script>
     </c:param>
     <c:param name="content">
-        <c:param name="content">
 	        <section class="container">
-	            <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">科目削除</h2>
+	            <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">科目情報削除</h2>
 	            <c:if test="${not empty errors}">
 	                <div class="alert alert-danger">
 	                    <c:forEach var="error" items="${errors}">
@@ -21,23 +20,23 @@
 	                    </c:forEach>
 	                </div>
 	            </c:if>
-	            <form action="SubjectDeleteExecute.action" method="post" onsubmit="return confirmDelete()">
-	                <div class="mb-3">
-	                    <label class="form-label">科目コード</label>
+	            <div class="mx-auto py-2">
+	            	<input class="btn btn-danger" type="submit" value="削除" />
+	            	<br>
+	            	<br>
+	            	<br>
+	            </div>
+	            <a href="List.action">戻る</a>
+	            <form action="SubjectDeleteExecute.action" method="get" onsubmit="return confirmDelete()">
+	                <div class="mx-auto py-2">
 	                    <p><c:out value="${subject_cd}"/></p>
 	                    <input type="hidden" name="subject_cd" value="${subject_cd}"/>
 	                </div>
-	                <div class="mb-3">
-	                    <label class="form-label">科目名</label>
+	                <div class="mx-auto py-2">
 	                    <p><c:out value="${subject_name}"/></p>
 	                    <input type="hidden" name="subject_name" value="${subject_name}"/>
 	                </div>
-	                <div class="mb-3">
-	                    <input class="btn btn-danger" type="submit" value="削除" />
-	                    <a href="SubjectList.action" class="btn btn-secondary ms-2">戻る</a>
-	                </div>
 	            </form>
 	        </section>
-	    </c:param>
     </c:param>
 </c:import>
