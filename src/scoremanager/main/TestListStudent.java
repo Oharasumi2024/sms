@@ -14,20 +14,15 @@ import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
-import tool.Action;
 
+public class TestListStudent {
 
-
-
-public class TestListSubject extends Action {
-
-	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 
 
 
-			HttpSession session = req.getSession();
+			HttpSession session=req.getSession();
 			Teacher teacher = (Teacher)session.getAttribute("user");
 
 			// ローカル変数の指定 1
@@ -47,7 +42,7 @@ public class TestListSubject extends Action {
 			entYearStr = req.getParameter("f1");
 			classNum = req.getParameter("f2");
 			isAttendStr = req.getParameter("f3");
-            
+
 			// ビジネスロジック 4
 			if (entYearStr != null) {
 				// 数値に変換
@@ -92,7 +87,7 @@ public class TestListSubject extends Action {
 			// リクエストにクラス番号をセット
 			req.setAttribute("f2", classNum);
 			// 在学フラグが送信されていた場合
-			if (isAttendStr != null) {
+			if (isAttendStr != null){
 				// 在学フラグを立てる
 				isAttend = true;
 				// リクエストに在学フラグをセット
@@ -105,10 +100,7 @@ public class TestListSubject extends Action {
 			req.setAttribute("ent_year_set", entYearSet);
 
 			// JSPへフォワード 7
-			req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+			req.getRequestDispatcher("test_list_Student.jsp").forward(req, res);
 
 	}
-
 }
-
-
