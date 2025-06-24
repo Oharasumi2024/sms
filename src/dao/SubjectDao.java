@@ -70,7 +70,7 @@ public class SubjectDao extends Dao {
 		PreparedStatement statement=null;
 	try {
 		statement=connection.prepareStatement(
-				"select cd,name from subject where school_cd=?");
+				"select * from subject where school_cd=?");
 		//学校コードをバインド
 		statement.setString(1,school.getCd());
 		//リザルトセット
@@ -79,12 +79,10 @@ public class SubjectDao extends Dao {
 		rSet=statement.executeQuery();
 		//結果の格納
 		while (rSet.next()) {
-			//インスタンスの初期化
 			Subject subject=new Subject();
-			//検索結果をセット
 			subject.setCd(rSet.getString("cd"));
 			subject.setName(rSet.getString("name"));
-			//リストに追加
+			subject.setSchool(school);
 			list.add(subject);
 		}
 	}catch(Exception e){
