@@ -73,7 +73,7 @@
 				</div>
 			</form>
 			</div>
-			<div><p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p></div>
+			<div><p style="color:  aqua;">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p></div>
 		</section>
 	</c:param>
 </c:import>
