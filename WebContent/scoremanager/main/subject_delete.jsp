@@ -27,7 +27,6 @@
 
       <!--  hidden: 科目コード -->
       <!--  hidden: 科目名 -->
-
         <input type="hidden" name="subject_cd" value="${subject_cd}" />
         <input type="hidden" name="subject_name" value="${subject_name}" />
 
