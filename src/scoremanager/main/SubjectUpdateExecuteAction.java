@@ -31,23 +31,15 @@ public class SubjectUpdateExecuteAction extends Action {
 
 
         // 科目の存在チェック
-       /*
         	if (errors.isEmpty()) {
             Subject existingSubject = subjectDao.get(cd, teacher.getSchool());
             if (existingSubject == null) {
                 errors.put("cd", "科目コードは存在しません");
             }
         }
-        */
 
         // エラーがあれば戻す
-        /*if (!errors.isEmpty()) {
-            req.setAttribute("errors", errors);
-            req.setAttribute("cd", cd);
-            req.setAttribute("name", name);
-            req.getRequestDispatcher("subject_update.jsp").forward(req, res);
-            return;
-        }*/
+
 
         // 科目情報を更新
         Subject subject = new Subject();
