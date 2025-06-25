@@ -11,7 +11,7 @@
 
       <!-- ②確認メッセージ -->
       <p class="text-danger text-center">
-        「<c:out value='${subject_name}'/>（<c:out value='${subject_cd}'/>）」を削除してもよろしいですか？
+        「<c:out value="${subject_name}"/>（<c:out value="${subject_cd}"/>）」を削除してもよろしいですか？
       </p>
 
       <!-- ⑤ hidden: 科目コード -->
