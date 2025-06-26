@@ -15,18 +15,20 @@
 			<form action="SubjectUpdateExecute.action" method="get">
 				<div class="mx-auto py-2">
 					<label for="cd">科目コード</label><br>
-					<input class="form-control" type="text" id="cd" name="cd" value="${cd }" readonly  placeholder="選択された科目の科目コード"/>
+					<input  type="text" id="cd" name="cd" style="border :none; outline :none;" value="${cd }" readonly placeholder="選択された科目の科目コード"/>
 				</div>
 				<div class="mt-2 text-warning">${errors.get("1") }</div>
 				<div class="mx-auto py-2">
 					<label for="name">科目名</label><br>
-					<input class="form-control" type="text" id="name" name="name" value="${name }" required maxlength="20"  placeholder="選択された科目の科目名"/>
+					<input class="form-control" type="text" id="name" name="name" value="${name }" required maxlength="20" placeholder="選択された科目の科目名"/>
 				</div>
 				<div class="mx-auto py-2">
 					<input class="btn btn-primary" type="submit" value="変更"/>
 				</div>
 			</form>
-			<a href="List.action">戻る</a>
+			<div class="mt-3">
+          		<a href="SubjectList.action" class="btn btn-secondary">戻る</a>
+        	</div>
 		</section>
 	</c:param>
 </c:import>
