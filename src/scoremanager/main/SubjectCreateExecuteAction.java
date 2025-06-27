@@ -19,8 +19,8 @@ public class SubjectCreateExecuteAction extends Action {
 		// ローカル変数の指定 1
 		HttpSession session = req.getSession(); // セッション
 		Teacher teacher = (Teacher)session.getAttribute("user");
-		String subject_cd = ""; // 科目コード
-		String subject_name = ""; // 科目名
+		String subject_cd = "cd"; // 科目コード
+		String subject_name = "name"; // 科目名
 		Subject subject = new Subject();
 		SubjectDao subjectDao = new SubjectDao();
 		Map<String, String> errors = new HashMap<>();
