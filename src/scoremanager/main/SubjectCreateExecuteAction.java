@@ -30,7 +30,7 @@ public class SubjectCreateExecuteAction extends Action {
 		subject_name = req.getParameter("name");
 
 		if (subject_cd.length() != 3) {
-		    errors.put("1", "3文字で入力してください");
+		    errors.put("1", "科目コードは3文字で入力してください");
 			// リクエストにエラーメッセージをセット
 			req.setAttribute("errors", errors);
 		} else {
