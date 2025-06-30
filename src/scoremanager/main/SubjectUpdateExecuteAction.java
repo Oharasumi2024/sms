@@ -38,8 +38,6 @@ public class SubjectUpdateExecuteAction extends Action {
             }
         }
 
-        // エラーがあれば戻す
-
 
         // 科目情報を更新
         Subject subject = new Subject();

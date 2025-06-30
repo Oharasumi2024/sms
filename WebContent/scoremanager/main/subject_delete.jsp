@@ -11,7 +11,7 @@
 
       <!-- 確認メッセージ -->
       <label class="text-center">
-        <p>「${subject_name}(${subject_cd}）」を削除してもよろしいですか？</p>
+        <p>「${subject_name}(${subject_cd}）」を削除してもよろしいですか</p>
       </label>
 
 	  <form action="SubjectDeleteExecute.action" method="get">
