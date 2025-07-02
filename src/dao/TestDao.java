@@ -89,47 +89,52 @@ public class TestDao extends Dao {
 	}
 
 	public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) throws Exception {
-		//リストを初期化
-		List<Test> list = new ArrayList<>();
-		//コネクションを確立
-		Connection connection = getConnection();
-		//プリペアードステートメント
-		PreparedStatement statement = null;
-		//リザルトセット
-		ResultSet resultSet = null;
-		//SQl文の条件
-		String condition = "and ent_year = ? and class_num = ? and subject_cd = ? and num = ?";
-		//SQL分をソート
-		String order = " order by no asc";
+	    List<Test> list = new ArrayList<>();
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    ResultSet resultSet = null;
 
-		try {
-			statement = connection.prepareStatement(baseSql + condition + order);
-			statement.setString(1, school.getCd());
-			statement.setInt(2, entYear);
-			statement.setString(3, classNum);
-			statement.setString(4, subject.getCd());
-			statement.setInt(5, num);
-			resultSet = statement.executeQuery();
-			list = postFilter(resultSet, school);
-			} catch (Exception e) {
-			throw e;
+	    // SQL構築
+	    StringBuilder sql = new StringBuilder(baseSql); // baseSql = "select * from test where schoo_cd = ?"
+	    List<Object> params = new ArrayList<>();
+
+	    sql.append(" and ent_year = ?");
+	    params.add(entYear);
+
+	    sql.append(" and class_num = ?");
+	    params.add(classNum);
+
+	    sql.append(" and subject_cd = ?");
+	    params.add(subject.getCd());
+
+	    sql.append(" and num = ?");
+	    params.add(num);
+
+	    sql.append(" order by no asc");
+
+	    try {
+	        statement = connection.prepareStatement(sql.toString());
+	        statement.setString(1, school.getCd()); // school_cd は必須
+	        for (int i = 0; i < params.size(); i++) {
+	            Object value = params.get(i);
+	            if (value instanceof String) {
+	                statement.setString(i + 2, (String) value); // index+2 because 1 is already used
+	            } else if (value instanceof Integer) {
+	                statement.setInt(i + 2, (Integer) value);
+	            }
+	        }
+
+	        resultSet = statement.executeQuery();
+	        list = postFilter(resultSet, school);
+
+	    } catch (Exception e) {
+	        throw e;
 	    } finally {
-	    	if (statement != null) {
-	    		try {
-	    			statement.close();
-	    		} catch (SQLException sqle) {
-	    			throw sqle;
-	    		}
-	    	}
-	    	if (connection != null) {
-	    		try {
-	    			connection.close();
-	    		} catch (SQLException sqle) {
-	    			throw sqle;
-	    		}
-	    	}
+	        if (statement != null) try { statement.close(); } catch (SQLException sqle) { throw sqle; }
+	        if (connection != null) try { connection.close(); } catch (SQLException sqle) { throw sqle; }
 	    }
-	        return list;
+
+	    return list;
 	}
 
 	public boolean save(List<Test> list) throws Exception {
@@ -154,7 +159,7 @@ public class TestDao extends Dao {
 		            } else {
 		                // 既存のデータがある場合はUPDATE
 		                statement = connection.prepareStatement(
-		                    "UPDATE test SET score = ?, date = ? WHERE no = ?"
+		                    "UPDATE test SET point = ?, date = ? WHERE no = ?"
 		                );
 		                statement.setInt(1, test.getPoint());
 		                statement.setInt(3, test.getNo());
@@ -193,7 +198,7 @@ public class TestDao extends Dao {
 
 		try {
 			// INSERT文
-			statement = connection.prepareStatement("insert into test(no, score, student_no, subject_cd, school_cd) values(?, ?, ?, ?, ?)");
+			statement = connection.prepareStatement("insert into test(no, point, student_no, subject_cd, school_cd) values(?, ?, ?, ?, ?)");
 			//値をバインド
 			statement.setInt(1, test.getNo());
 			statement.setInt(2, test.getPoint());
