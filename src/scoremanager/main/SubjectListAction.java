@@ -2,9 +2,7 @@ package scoremanager.main;
 
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +23,6 @@ public class SubjectListAction extends Action {
 
 		List<Subject> subjects = null;
 		SubjectDao subjectDao = new SubjectDao();
-		Map<String, String> errors = new HashMap<>();
 
 		subjects = subjectDao.filter(teacher.getSchool());
 		req.setAttribute("subjects", subjects);

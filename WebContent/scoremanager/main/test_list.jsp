@@ -56,7 +56,9 @@
 					<div><input type="hidden" name="f" value="sj"></div>
 				</div>
 			</form>
-			<p align="center" style="color: #dee2e6">----------------------------------------------------------------------------------------------------</p>
+
+			<hr style="color: #dee2e6 border: none; border-top: 1px dashed #999; margin: 30px auto; width: 90%" />
+
 			<form method="get" action="TestListStudentExecute.action">
 				<div class="row">
 					<div class="col-2" style="display:flex; justify-content:center; align-items:center;">
