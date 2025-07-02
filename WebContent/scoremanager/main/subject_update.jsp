@@ -17,7 +17,7 @@
 					<label for="cd">科目コード</label><br>
 					<input  type="text" id="cd" name="cd" style="border :none; outline :none;" value="${cd }" readonly placeholder="選択された科目の科目コード"/>
 				</div>
-				<div class="mt-2 text-warning">${errors.get("1") }</div>
+				<div class="mt-2 text-warning">${errors }</div>
 				<div class="mx-auto py-2">
 					<label for="name">科目名</label><br>
 					<input class="form-control" type="text" id="name" name="name" value="${name }" required maxlength="20" placeholder="選択された科目の科目名"/>
