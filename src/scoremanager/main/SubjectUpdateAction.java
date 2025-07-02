@@ -18,30 +18,37 @@ public class SubjectUpdateAction extends Action {
 				Teacher teacher = (Teacher)session.getAttribute("user");
 
 				String cd = ""; // 科目コード
-				String school = "";
-				String name= ""; // 科目名
+				String name=(String)req.getAttribute("name") ; // 科目名
 
 				Subject subject = new Subject();
 				SubjectDao subjectDao = new SubjectDao();
 
 				// リクエストパラメーターの取得 2
 				cd = req.getParameter("cd");
+				String errors=(String)req.getAttribute("errors");
 
 
 				// DBからデータ取得 3
 				// 科目の詳細データを取得
-				subject = subjectDao.get(cd,subject.getSchool());
+				try{
+					subject = subjectDao.get(cd,teacher.getSchool());
 
+					if(subject==null){
+						errors="科目が存在しません";
+					}else{
+						if (name==null || name.isEmpty()){
+							name=subject.getName();
+						}
+					}
+				}catch(NullPointerException e){
+					e.printStackTrace();
+				}
 
-				// ビジネスロジック 4
-				name = subject.getName();
-
-
-				// レスポンス値をセット 6
 				// リクエストに科目情報をセット
 				req.setAttribute("cd", cd);
 				// リクエストに氏名をセット
 				req.setAttribute("name", name);
+				req.setAttribute("errors", errors);
 
 				// JSPへフォワード 7
 				req.getRequestDispatcher("subject_update.jsp").forward(req, res);

@@ -46,7 +46,7 @@
 							<option value="0">--------</option>
 							<c:forEach var="subject" items="${subject_set }">
 								<%-- 現在のsubjectと選択されていたf3が一致していた場合selectedを追記 --%>
-								<option value="${subject }" <c:if test="${subject==f3 }">selected</c:if>>${subject }</option>
+								<option value="${subject.name }" <c:if test="${subject.name==f3 }">selected</c:if>>${subject.name }</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -56,7 +56,9 @@
 					<div><input type="hidden" name="f" value="sj"></div>
 				</div>
 			</form>
-			<p align="center" style="color: #dee2e6">----------------------------------------------------------------------------------------------------</p>
+
+			<hr style="color: #dee2e6 border: none; border-top: 1px dashed #999; margin: 30px auto; width: 90%" />
+
 			<form method="get" action="TestListStudentExecute.action">
 				<div class="row">
 					<div class="col-2" style="display:flex; justify-content:center; align-items:center;">
@@ -73,7 +75,23 @@
 				</div>
 			</form>
 			</div>
-			<div><p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p></div>
+			<c:choose>
+ 				 <c:when test="${empty searchType}">
+   				 <div>
+     				 <p style="color: aqua;">
+      				  科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
+     				 </p>
+    				</div>
+ 				 </c:when>
+
+  				<c:when test="${searchType == 'st'}">
+   				 <jsp:include page="test_list_student.jsp" />
+  				</c:when>
+
+  				<c:when test="${searchType == 'sj'}">
+    				<jsp:include page="test_list_subject.jsp" />
+  				</c:when>
+			</c:choose>
 		</section>
 	</c:param>
 </c:import>

@@ -18,23 +18,23 @@
 					<div class="mt-2 text-warning">${errors.get("f1") }</div>
 				</div>
 
-
+                  	<div>氏名：${students.size() }件</div>
 					<table class="table table-hover">
+
 						<tr>
-							<th>入学年度</th>
-							<th>クラス</th>
-							<th>学生番号</th>
-							<th>氏名</th>
-							<th>１回目</th>
-							<th>2回目</th>
+							<th>科目名</th>
+							<th>科目コード</th>
+							<th>回数</th>
+							<th>点数</th>
+
 						</tr>
 						<c:forEach var="student" items="${students}">
 							<tr>
-								<td>${student.entYear }</td>
-								<td>${student.classNum }</td>
-								<td>${student.studentNo }</td>
-								<td>${student.studentName }</td>
-								<td>${student.points}</td>
+								<td>${student.subjectName}</td>
+								<td>${student.subjectCd }</td>
+								<td>${student.num }</td>
+								<td>${student.point }</td>
+
 								<td class="text-center">
 								</td>
 								<td></td>
