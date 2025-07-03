@@ -30,7 +30,7 @@ public class TestListStudentDao extends Dao {
 				list.add(testliststudent);
 			}
 		} catch (SQLException | NullPointerException e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return list;
 	}
