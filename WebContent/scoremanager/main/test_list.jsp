@@ -75,7 +75,23 @@
 				</div>
 			</form>
 			</div>
-			<div><p style="color:  aqua;">科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</p></div>
+			<c:choose>
+ 				 <c:when test="${empty searchType}">
+   				 <div>
+     				 <p style="color: aqua;">
+      				  科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
+     				 </p>
+    				</div>
+ 				 </c:when>
+
+  				<c:when test="${searchType == 'st'}">
+   				 <jsp:include page="test_list_student.jsp" />
+  				</c:when>
+
+  				<c:when test="${searchType == 'sj'}">
+    				<jsp:include page="test_list_subject.jsp" />
+  				</c:when>
+			</c:choose>
 		</section>
 	</c:param>
 </c:import>

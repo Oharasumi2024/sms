@@ -25,16 +25,13 @@ public class TestListSubjectDao extends Dao {
             String stuNo   = rs.getString("student_no");
             TestListSubject tls = temp.get(stuNo);
             if (tls == null) {
-                // 初登場の生徒なら bean を作成＆初期化
                 tls = new TestListSubject();
                 tls.setStudentNo(stuNo);
                 tls.setStudentName(rs.getString("student_name"));
                 tls.setClassNum(rs.getString("classnum"));
-                // Map プロパティも初期化しておく
                 tls.setPoints(new LinkedHashMap<>());
                 temp.put(stuNo, tls);
             }
-            // Map にテスト番号→点数を追加
             int testNo  = rs.getInt("no");
             int point   = rs.getInt("point");
             tls.getPoints().put(testNo, point);
