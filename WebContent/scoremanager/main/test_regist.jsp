@@ -70,6 +70,7 @@ pageEncoding="UTF-8" %>
 				                <th>点数</th>
 				            </tr>
 				            <c:forEach var="test" items="${testList}">
+				            <input type="hidden" name="regist" value="${test.student.no}"/>
 				                <tr>
 				                    <td>${test.student.admissionYear}</td>
 				                    <td>${test.classNo}</td>
