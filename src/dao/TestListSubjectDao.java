@@ -20,6 +20,7 @@ public class TestListSubjectDao extends Dao {
     private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
         List<TestListSubject> list = new ArrayList<>();
         try {
+        	//リザルトセットを全権走査
             while (rSet.next()) {
                 String stuNo = rSet.getString("student_no");
                 TestListSubject tls = new TestListSubject();
@@ -54,7 +55,6 @@ public class TestListSubjectDao extends Dao {
 
         /*String condition = "ent_year = ? And class_num = ? AND subject_cd = ? AND school_cd = ? ";*/
         String order = " ORDER BY subject_cd";
-
 
         try {
             ps = conn.prepareStatement(BASE_SQL + condition + order);
