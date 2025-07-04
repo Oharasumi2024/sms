@@ -70,7 +70,7 @@ public class TestRegistAction extends Action{
         }
 
         //  入力済み値をセット
-        req.setAttribute("ent_year", entYearStr);
+        req.setAttribute("ent_year", entYearSet);
         req.setAttribute("class_num", ClassNum);
         req.setAttribute("subject_id", subject);
         req.setAttribute("test_times", test_times);
