@@ -23,27 +23,28 @@ public class TestRegistAction extends Action{
     public void execute(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        // 1. セッション／ログインチェック
+        // セッション／ログインチェック
         HttpSession session = req.getSession(false);
-        Teacher teacher = (session != null)
-            ? (Teacher) session.getAttribute("user")
-            : null;
-        if (teacher == null) {
-            res.sendRedirect("login.jsp");
-            return;
-        }
+        Teacher teacher = (Teacher)session.getAttribute("user");
+
+        //ローカル変数の指定
+        String entYearStr = "";
+        String ClassNum = "";
+        String subject = "";
+        String test_times = "";
+
         School school = teacher.getSchool();
 
-        // 2. リクエストパラメータ取得
-        String ent_year = req.getParameter("ent_year"); // 入学年度
-        String class_num = req.getParameter("class_num"); // クラス
-        String subject = req.getParameter("subject"); // 科目
-        String test_times = req.getParameter("test_times"); // 回数
+        //  リクエストパラメータ取得
+        entYearStr = req.getParameter("f1");
+		ClassNum = req.getParameter("f2");
+		subject = req.getParameter("f3");
+		test_times = req.getParameter("f4");
 
         List<String> errors = new ArrayList<>();
 
-        if (ent_year == null || ent_year.isEmpty()
-         || class_num == null || class_num.isEmpty()
+        if (entYearStr == null || entYearStr.isEmpty()
+         || ClassNum == null || ClassNum.isEmpty()
          || subject == null || subject.isEmpty()
          || test_times == null || test_times.isEmpty()) {
             errors.add("入学年度とクラスと科目と回数を選択してください");
@@ -58,17 +59,17 @@ public class TestRegistAction extends Action{
             errors.add("データの取得に失敗しました");
         }
 
-        // 5. 入力済み値をセット
-        req.setAttribute("ent_year", ent_year);
-        req.setAttribute("class_num", class_num);
+        //  入力済み値をセット
+        req.setAttribute("ent_year", entYearStr);
+        req.setAttribute("class_num", ClassNum);
         req.setAttribute("subject_id", subject);
         req.setAttribute("test_times", test_times);
 
-        // 6. 成績データ取得（パラメータが揃っていれば）
+        //  成績データ取得（パラメータが揃っていれば）
         if (errors.isEmpty()) {
             try {
-                int year = Integer.parseInt(ent_year);
-                String classNum = class_num;
+                int year = Integer.parseInt(entYearStr);
+                String classNum = ClassNum;
                 String subjectCd = subject;
                 int times = Integer.parseInt(test_times);
 
@@ -85,7 +86,7 @@ public class TestRegistAction extends Action{
             }
         }
 
-        // 7. エラー or 次画面へフォワード
+        // エラー or 次画面へフォワード
         if (!errors.isEmpty()) {
             req.setAttribute("errors", errors);
         }
