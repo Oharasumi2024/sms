@@ -15,7 +15,8 @@ import bean.TestListSubject;
 public class TestListSubjectDao extends Dao {
 
 	private static final String BASE_SQL =
-			  "SELECT t.*, s.ent_year FROM test t JOIN student s ON t.student_no = s.no WHERE ";
+			  "SELECT test.student_no, student.name, test.subject_cd, test.school_cd, test.no, test.point, test.class_num, student.ent_year from test "
+			  + "join student on test.student_no = student.no where test.school_cd = ?";
 
     private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
         List<TestListSubject> list = new ArrayList<>();
@@ -46,18 +47,18 @@ public class TestListSubjectDao extends Dao {
     public List<TestListSubject> filter(int entYear, String classNum, Subject subject, School school) throws Exception {
 
         List<TestListSubject> list = new ArrayList<>();
-        Connection conn = getConnection();
+        Connection connection = getConnection();
         PreparedStatement ps = null;
         ResultSet rSet = null;
 
         String condition =
-        	"s.ent_year = ? AND t.class_num = ? AND t.subject_cd = ? AND t.school_cd = ?";
+        	"and student.ent_year = ? and test.class_num = ? and test.subject_cd = ?";
 
         /*String condition = "ent_year = ? And class_num = ? AND subject_cd = ? AND school_cd = ? ";*/
         String order = " ORDER BY subject_cd";
 
         try {
-            ps = conn.prepareStatement(BASE_SQL + condition + order);
+            ps = connection.prepareStatement(BASE_SQL + condition + order);
             //値をバインド
             ps.setInt(1, entYear);
             ps.setString(2, classNum);
