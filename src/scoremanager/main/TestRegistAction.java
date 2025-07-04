@@ -43,6 +43,7 @@ public class TestRegistAction extends Action{
 
         List<String> errors = new ArrayList<>();
 
+
         if (entYearStr == null || entYearStr.isEmpty()
          || ClassNum == null || ClassNum.isEmpty()
          || subject == null || subject.isEmpty()
