@@ -1,6 +1,7 @@
 package scoremanager.main;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class TestRegistAction extends Action{
         String ClassNum = "";
         String subject = "";
         String test_times = "";
+        LocalDate todaysDate = LocalDate.now(); // LocalDateインスタンスを取得
+		int year = todaysDate.getYear(); // 現在の年を取得
 
         School school = teacher.getSchool();
 
@@ -42,6 +45,12 @@ public class TestRegistAction extends Action{
 		test_times = req.getParameter("f4");
 
         List<String> errors = new ArrayList<>();
+		// リストを初期化
+		List<Integer> entYearSet = new ArrayList<>();
+		// 10年前から1年後まで年をリストに追加
+		for (int i = year - 10; i < year + 1; i++) {
+			entYearSet.add(i);
+		}
 
 
         if (entYearStr == null || entYearStr.isEmpty()
@@ -69,7 +78,7 @@ public class TestRegistAction extends Action{
         //  成績データ取得（パラメータが揃っていれば）
         if (errors.isEmpty()) {
             try {
-                int year = Integer.parseInt(entYearStr);
+                int ent_year = Integer.parseInt(entYearStr);
                 String classNum = ClassNum;
                 String subjectCd = subject;
                 int times = Integer.parseInt(test_times);
@@ -78,7 +87,7 @@ public class TestRegistAction extends Action{
                 subj.setCd(subjectCd);
 
                 TestDao testDao = new TestDao();
-                List<Test> testList = testDao.filter(year, classNum, subj, times, school);
+                List<Test> testList = testDao.filter(ent_year, classNum, subj, times, school);
                 req.setAttribute("test_list", testList);
 
             } catch (NumberFormatException nfe) {
