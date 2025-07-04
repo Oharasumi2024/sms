@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Student;
-import bean.Student;
 import bean.Teacher;
 import bean.TestListStudent;
 import dao.ClassNumDao;
@@ -48,6 +47,10 @@ public class TestLIstStudentExecuteAction extends Action {
 		boolean isAttend=false;//在学フラグ
 
 
+
+
+
+
 		//リクエストパラメーターの取得
 		entYearStr=req.getParameter("f1");
 		classNum=req.getParameter("f2");
@@ -61,6 +64,7 @@ public class TestLIstStudentExecuteAction extends Action {
 		// リストを初期化
 		List<Integer> entYearSet = new ArrayList<>();
 		// 10年前から1年後まで年をリストに追加
+
 		for (int i = year - 10; i < year + 1; i++) {
 			entYearSet.add(i);
 		}
@@ -70,12 +74,15 @@ public class TestLIstStudentExecuteAction extends Action {
 
 
 
-		List<Student> list2=studentDao.filter(teacher.getSchool());
+		List<Student> list2=studentDao.filter(teacher.getSchool(),false);
 
 
 
-        student=StudentDao.get(subjectcd,teacher.getSchool());
-       testlistsubject = testlistsubjectdao.filter(entYear , classNum ,student, teacher.getSchool());
+		student = studentDao.get(student_no);
+
+       testlistsubject = testlistsubjectdao.filter(student);
+
+
 
 
 
@@ -93,4 +100,4 @@ public class TestLIstStudentExecuteAction extends Action {
 
 
 }
-
+}

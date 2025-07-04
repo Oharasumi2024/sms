@@ -22,10 +22,14 @@
 					<table class="table table-hover">
 
 						<tr>
-							<th>科目名</th>
-							<th>科目コード</th>
-							<th>回数</th>
-							<th>点数</th>
+						<th>入学年度</th>
+							<th>学生番号</th>
+							<th>クラス</th>
+							<th>氏名</th>
+							<th>1回</th>
+							<th>2回</th>
+
+
 
 						</tr>
 						<c:forEach var="student" items="${students}">
