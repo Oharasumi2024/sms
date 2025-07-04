@@ -14,8 +14,8 @@ import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
 
-    private static final String BASE_SQL =
-        "select * from test where ";
+	private static final String BASE_SQL =
+			  "SELECT t.*, s.ent_year FROM test t JOIN student s ON t.student_no = s.no WHERE ";
 
     private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
         List<TestListSubject> list = new ArrayList<>();
@@ -49,8 +49,12 @@ public class TestListSubjectDao extends Dao {
         PreparedStatement ps = null;
         ResultSet rSet = null;
 
-        String condition = " ent_year = ? AND class_num = ? AND subject_cd = ? AND school_cd = ? ";
+        String condition =
+        	"s.ent_year = ? AND t.class_num = ? AND t.subject_cd = ? AND t.school_cd = ?";
+
+        /*String condition = "ent_year = ? And class_num = ? AND subject_cd = ? AND school_cd = ? ";*/
         String order = " ORDER BY subject_cd";
+
 
         try {
             ps = conn.prepareStatement(BASE_SQL + condition + order);
