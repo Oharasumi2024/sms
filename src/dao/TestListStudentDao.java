@@ -30,7 +30,7 @@ public class TestListStudentDao extends Dao {
 				list.add(testliststudent);
 			}
 		} catch (SQLException | NullPointerException e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return list;
 	}
@@ -45,9 +45,9 @@ public class TestListStudentDao extends Dao {
 		//リザルトセット
 		ResultSet rSet=null;
 		//条件
-		String condition="student_no=? ";
+		String condition=" student_no=? ";
 		//ソート
-		String order="order by subject_cd";
+		String order=" order by subject_cd";
 		try {
 			//プリパレにステートメントをセット
 			statement=connection.prepareStatement(baseSql+condition+order);

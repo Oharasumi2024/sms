@@ -43,6 +43,8 @@ public class TestListStudent {
 			classNum = req.getParameter("f2");
 			isAttendStr = req.getParameter("f3");
 
+
+
 			// ビジネスロジック 4
 			if (entYearStr != null) {
 				// 数値に変換
@@ -58,6 +60,8 @@ public class TestListStudent {
 			for (int i = year - 10; i < year + 1; i++) {
 				entYearSet.add(i);
 			}
+
+
 
 			// DBからデータ取得 3
 			// ログインユーザーの学校コードをもとにクラス番号の一覧を取得
@@ -81,6 +85,9 @@ public class TestListStudent {
 				students = studentDao.filter(teacher.getSchool(), isAttend);
 			}
 
+           
+			
+
 			// レスポンス値をセット 6
 			// リクエストに入学年度をセット
 			req.setAttribute("f1", entYear);
@@ -101,6 +108,7 @@ public class TestListStudent {
 
 			// JSPへフォワード 7
 			req.getRequestDispatcher("test_list_Student.jsp").forward(req, res);
+
 
 	}
 }

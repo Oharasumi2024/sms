@@ -18,9 +18,8 @@
 					<div class="mt-2 text-warning">${errors.get("f1") }</div>
 				</div>
 
-                  	<div>氏名：${students.size() }件</div>
-					<table class="table table-hover">
 
+					<table class="table table-hover">
 						<tr>
 							<th>科目名</th>
 							<th>科目コード</th>
@@ -30,11 +29,10 @@
 						</tr>
 						<c:forEach var="student" items="${students}">
 							<tr>
-								<td>${student.subjectName}</td>
+								<td>${student.subjectName }</td>
 								<td>${student.subjectCd }</td>
 								<td>${student.num }</td>
 								<td>${student.point }</td>
-
 								<td class="text-center">
 								</td>
 								<td></td>

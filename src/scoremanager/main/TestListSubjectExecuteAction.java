@@ -39,7 +39,7 @@ public class TestListSubjectExecuteAction extends Action {
 		List<Student> subjects = null; // 学生リスト
 		TestListSubjectDao testlistsubjectdao=new TestListSubjectDao();
 		LocalDate todaysDate = LocalDate.now(); // LocalDateインスタンスを取得
-		List<TestListSubject> testlistsubject=new ArrayList<>();
+		List<TestListSubject> testlistsubjects=new ArrayList<>();
 		int year = todaysDate.getYear(); // 現在の年を取得
 		StudentDao studentDao = new StudentDao(); // 学生Dao
 		ClassNumDao classNumDao = new ClassNumDao(); // クラス番号Daoを初期化
@@ -47,14 +47,17 @@ public class TestListSubjectExecuteAction extends Action {
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 		boolean isAttend=false;//在学フラグ
 
+
+
 		//リクエストパラメーターの取得
 		entYearStr=req.getParameter("f1");
 		classNum=req.getParameter("f2");
 		subjectcd=req.getParameter("f3");
 		student_no=req.getParameter("f4");
 
+
 		if (entYearStr != null) {
-			entYear=Integer.parseInt("entYearStr");
+			entYear=Integer.parseInt(entYearStr);
 		}
 		// リストを初期化
 		List<Integer> entYearSet = new ArrayList<>();
@@ -65,14 +68,9 @@ public class TestListSubjectExecuteAction extends Action {
 		// DBからデータ取得 3
 		// ログインユーザーの学校コードをもとにクラス番号の一覧を取得
 		List<String> list = classNumDao.filter(teacher.getSchool());
-
 		List<Subject> list2=subjectDao.filter(teacher.getSchool());
-
-
-
-		subject=subjectDao.get(subjectcd,teacher.getSchool());
-       testlistsubject = testlistsubjectdao.filter(entYear , classNum ,subject, teacher.getSchool());
-
+        subject=subjectDao.get(subjectcd,teacher.getSchool());
+        testlistsubjects = testlistsubjectdao.filter(entYear , classNum ,subject, teacher.getSchool());
 
 
 
@@ -83,7 +81,7 @@ public class TestListSubjectExecuteAction extends Action {
 		req.setAttribute("class_num_set", list);
 		req.setAttribute("ent_year_set", entYearSet);
 		req.setAttribute("subject_set", list2);
-        req.setAttribute("testlistsubject",testlistsubject);
+        req.setAttribute("testlistsubjects",testlistsubjects);
 		req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
 
 
