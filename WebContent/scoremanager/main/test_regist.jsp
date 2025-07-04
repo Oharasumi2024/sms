@@ -49,20 +49,19 @@ pageEncoding="UTF-8" %>
 					    	<option value"2" <c:if test="${2==f4}">selected</c:if>>2</option>
 					   	 </select>
 					</div>
-					<div class="col-2">
-				    	<input type="submit" value="検索" />
+					<div class="col-4">
+				    	<button class="btn btn-secondary" id="button_1">検索</button>
 				    </div>
 			    </div>
 			</form>
-			<form action="TestRegistExecute.action">
-				<input type="hidden" name="f1" value="${f1}" />
-				<input type="hidden" name="f2" value="${f2}" />
-				<input type="hidden" name="f3" value="${f3}" />
-				<input type="hidden" name="f4" value="${f4}" />
+			<form action="TestRegistExecute.action" method="get">
+			<input type="hidden" name="f1" value="${f1}" />
+			<input type="hidden" name="f2" value="${f2}" />
+			<input type="hidden" name="f3" value="${f3}" />
+			<input type="hidden" name="f4" value="${f4}" />
 
 				<c:choose>
-				  <c:when test="${not empty testList}">
-				    <section class="me=4">
+				  <c:when test="${students.size()>0 }">
 					    <div>科目：${subject}（${count}回目）</div>
 					        <table class="table table-hover">
 					            <tr>
