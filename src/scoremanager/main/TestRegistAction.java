@@ -16,8 +16,9 @@ import bean.Test;
 import dao.ClassNumDao;
 import dao.SubjectDao;
 import dao.TestDao;
+import tool.Action;
 
-public class TestRegistAction {
+public class TestRegistAction extends Action{
 
     public void execute(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -41,7 +42,6 @@ public class TestRegistAction {
 
         List<String> errors = new ArrayList<>();
 
-        // 3. 入力チェック：いずれか未選択／未入力なら共通メッセージ
         if (ent_year == null || ent_year.isEmpty()
          || class_num == null || class_num.isEmpty()
          || subject == null || subject.isEmpty()
@@ -49,7 +49,6 @@ public class TestRegistAction {
             errors.add("入学年度とクラスと科目と回数を選択してください");
         }
 
-        // 4. 再表示用リスト取得（必ず）
         try {
             List<Subject> subjectList = new SubjectDao().filter(school);
             List<String> classNumList = new ClassNumDao().filter(school);
@@ -70,18 +69,17 @@ public class TestRegistAction {
             try {
                 int year = Integer.parseInt(ent_year);
                 String classNum = class_num;
-                String subjectCd = subject; // リクエストパラメータ（科目コード）
+                String subjectCd = subject;
                 int times = Integer.parseInt(test_times);
 
                 Subject subj = new Subject();
-                subj.setCd(subjectCd); // ← ここがポイント！
+                subj.setCd(subjectCd);
 
                 TestDao testDao = new TestDao();
                 List<Test> testList = testDao.filter(year, classNum, subj, times, school);
                 req.setAttribute("test_list", testList);
 
             } catch (NumberFormatException nfe) {
-                // 数値変換エラーは無視（入力チェックで対応）
             } catch (Exception ex) {
                 errors.add("既存の成績データ取得に失敗しました");
             }
