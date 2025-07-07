@@ -19,7 +19,7 @@ import dao.SubjectDao;
 import dao.TestListStudentDao;
 import tool.Action;
 
-public class TestLIstStudentExecuteAction extends Action {
+public class TestListStudentExecuteAction extends Action {
 
 
 	@Override
@@ -46,7 +46,7 @@ public class TestLIstStudentExecuteAction extends Action {
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 		boolean isAttend=false;//在学フラグ
 
-
+		String searchType=req.getParameter("f");
 
 
 
@@ -73,9 +73,7 @@ public class TestLIstStudentExecuteAction extends Action {
 		List<String> list = classNumDao.filter(teacher.getSchool());
 
 
-
 		List<Student> list2=studentDao.filter(teacher.getSchool(),false);
-
 
 
 		student = studentDao.get(student_no);
@@ -85,18 +83,16 @@ public class TestLIstStudentExecuteAction extends Action {
 
 
 
-
-
 		req.setAttribute("f1", entYear);
 		req.setAttribute("f2", classNum);
-		req.setAttribute("f3", student);
+		req.setAttribute("f3", subjectcd);
 		req.setAttribute("f4", student_no);
 		req.setAttribute("class_num_set", list);
 		req.setAttribute("ent_year_set", entYearSet);
 		req.setAttribute("subject_set", list2);
         req.setAttribute("testlistsubject",testlistsubject);
-		req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
-
+        req.setAttribute("searchType", searchType);
+		req.getRequestDispatcher("test_list.jsp").forward(req, res);
 
 
 }
