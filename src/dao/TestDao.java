@@ -14,7 +14,9 @@ import bean.Test;
 
 public class TestDao extends Dao {
 
-	private String baseSql = "select * from test where school_cd = ?";
+	private String baseSql = "select student.no as student_no, student.name, student.ent_year, student.class_num, "
+			+ "student.is_attend, student.school_cd, test.subject_cd, test.no as count, test.point "
+			+ "from student left join (select * from test where subject_cd = ? and no = ?) as test on student.no = test.student_no";
 
 	public Test get(Student student, Subject subject, School school, int no ) throws Exception{
 
@@ -114,11 +116,11 @@ public class TestDao extends Dao {
 
 	    try {
 	        statement = connection.prepareStatement(sql.toString());
-	        statement.setString(1, school.getCd()); // school_cd は必須
+	        statement.setString(1, school.getCd());
 	        for (int i = 0; i < params.size(); i++) {
 	            Object value = params.get(i);
 	            if (value instanceof String) {
-	                statement.setString(i + 2, (String) value); // index+2 because 1 is already used
+	                statement.setString(i + 2, (String) value);
 	            } else if (value instanceof Integer) {
 	                statement.setInt(i + 2, (Integer) value);
 	            }
