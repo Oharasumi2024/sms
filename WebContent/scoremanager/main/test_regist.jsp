@@ -18,7 +18,7 @@ pageEncoding="UTF-8" %>
 					    <label class="form-label" for="test-f1-select">入学年度</label>
 					    <select class="form-select" id="student-f1-select" name="f1">
 					    	<option value="0">--------</option>
-					        <c:forEach var="year" items="${ent_year }">
+					        <c:forEach var="year" items="${entYear }">
 					            <option value="${year }" <c:if test="${year==f1 }">selected</c:if>>${year }</option>
 					        </c:forEach>
 					    </select>
@@ -50,57 +50,52 @@ pageEncoding="UTF-8" %>
 					   	 </select>
 					</div>
 					<div class="col-4">
-				    	<button class="btn btn-secondary" id="button_1">検索</button>
+				    	<button type="submit" class="btn btn-secondary" id="filter-button">検索</button>
 				    </div>
 				    <div class="mt-2 text-warning">${errors.get("f1") }</div>
 			    </div>
 			</form>
 			<form action="TestRegistExecute.action" method="get">
-			<input type="hidden" name="f1" value="${f1}" />
-			<input type="hidden" name="f2" value="${f2}" />
-			<input type="hidden" name="f3" value="${f3}" />
-			<input type="hidden" name="f4" value="${f4}" />
-
-			<c:choose>
-				<c:when test="${test.size()>0 }">
-					<div>科目：${subject_name }（${test_no}回目）</div>
-				        <table class="table table-hover">
-				            <tr>
-				                <th>入学年度</th>
-				                <th>クラス</th>
-				                <th>学生番号</th>
-				                <th>氏名</th>
-				                <th>点数</th>
-				            </tr>
-				            <c:forEach var="test" items="${test}">
-				                <tr>
-				                    <td>${test.student.entYear}</td>
-				                    <td>${test.student.classNum}</td>
-				                    <td>${test.student.name}</td>
-				                    <td>${test.student.no}</td>
-				                    <td>
-				                    <c:choose>
-				                    	<c:when test="{$test.no !=0}">
-				                    		<input type="text" id="point_${test.student.no}" name="point_${test.student.no}" value="${test.point }">
-				                        </c:when>
-				                        <c:otherwise>
-				                        	<input type="text" id="point_${test.student.no}" name="point_${test.student.no}" value="">
-				                        </c:otherwise>
-				                    </c:choose>
-				               <c:if test="${mis[test.student.no] != null }">
-				               		<div class="text-warning">${mis[test.student.no]}</div>
-				               </c:if>
-			                </tr>
-			            </c:forEach>
-				    </table>
-				    <div>
-				       	<button class="btn btn-secondary" id="filter-button">登録して終了</button>
-			        </div>
-				</c:when>
-				<c:otherwise>
-					<div class="mt-2 text-warning">${error.get("e1") }</div>
-				</c:otherwise>
-			</c:choose>
+				<c:choose>
+					<c:when test="${test.size()>0 }">
+						<div>科目：${subject_name }（${f4}回目）</div>
+					        <table class="table table-hover">
+					            <tr>
+					                <th>入学年度</th>
+					                <th>クラス</th>
+					                <th>学生番号</th>
+					                <th>氏名</th>
+					                <th>点数</th>
+					            </tr>
+					            <c:forEach var="test" items="${test}">
+					                <tr>
+					                    <td>${test.student.entYear}</td>
+					                    <td>${test.student.classNum}</td>
+					                    <td>${test.student.name}</td>
+					                    <td>${test.student.no}</td>
+					                    <td>
+					                    <c:choose>
+					                    	<c:when test="{$test.no !=0}">
+					                    		<input type="text" id="point_${test.student.no}" name="point_${test.student.no}" value="${test.point }">
+					                        </c:when>
+					                        <c:otherwise>
+					                        	<input type="text" id="point_${test.student.no}" name="point_${test.student.no}" value="">
+					                        </c:otherwise>
+					                    </c:choose>
+					               <c:if test="${mis[test.student.no] != null }">
+					               		<div class="text-warning">${mis[test.student.no]}</div>
+					               </c:if>
+				                </tr>
+				            </c:forEach>
+					    </table>
+					    <div>
+					       	<button class="btn btn-secondary" id="filter-button">登録して終了</button>
+				        </div>
+					</c:when>
+					<c:otherwise>
+						<div class="mt-2 text-warning">${error.get("e1") }</div>
+					</c:otherwise>
+				</c:choose>
 			</form>
 		</section>
 	</c:param>

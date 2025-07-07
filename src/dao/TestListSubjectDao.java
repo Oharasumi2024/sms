@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import bean.School;
@@ -14,29 +13,32 @@ import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
 
-	private static final String BASE_SQL =
-			  "SELECT test.student_no, student.name, test.subject_cd, test.school_cd, test.no, test.point, test.class_num, student.ent_year from test "
-			  + "join student on test.student_no = student.no where test.school_cd = ?";
+	private String BASE_SQL = "select student.ent_year, student.no, student.name, student.class_num, a.no as no1,"
+			+ " a.point as point1, b.no as no2, b.point as point2";
+
 
     private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
         List<TestListSubject> list = new ArrayList<>();
         try {
         	//リザルトセットを全権走査
             while (rSet.next()) {
-                String stuNo = rSet.getString("student_no");
+                //インスタンスを初期化
                 TestListSubject tls = new TestListSubject();
-                	//インスタンスを初期化
-                    tls = new TestListSubject();
-                    tls.setStudentNo(stuNo);
-                    tls.setStudentName(rSet.getString("name"));
-                    tls.setClassNum(rSet.getString("classnum"));
-                    tls.setPoints(new LinkedHashMap<>());
-                    //リストに追加
-                    list.add(tls);
+                //検索結果をセット
+                tls.setYear(rSet.getInt("ent_year"));
+                tls.setStudentNo(rSet.getString("no"));
+                tls.setStudentName(rSet.getString("name"));
+                tls.setClassNum(rSet.getString("class_num"));
+                tls.putPoint(rSet.getInt("no1"), rSet.getInt("point1"));
+                if (rSet.getInt("no2") != 0) {
+                	tls.putPoint(rSet.getInt("no2"), rSet.getInt("point2"));
+                } else {
+                	tls.putPoint(2, -1);
+                }
 
-                int testNo = rSet.getInt("no");
-                int point = rSet.getInt("point");
-                tls.getPoints().put(testNo, point);
+                //リストに追加
+                list.add(tls);
+
             }
         } catch (SQLException | NullPointerException e) {
             throw e;
@@ -51,20 +53,31 @@ public class TestListSubjectDao extends Dao {
         PreparedStatement ps = null;
         ResultSet rSet = null;
 
-        String condition =
-        	"and student.ent_year = ? and test.class_num = ? and test.subject_cd = ?";
+        String from = " from (select test.student_no, test.subject_cd, test.school_cd, test.no, test.point, test.class_num"
+        		+ " from test join student on test.student_no = student.no where student.ent_year = ? and subject_cd = ? "
+        		+ "and test.class_num = ? and test.school_cd = ? and test.no = 1 order by test.student_no) as a";
 
-        /*String condition = "ent_year = ? And class_num = ? AND subject_cd = ? AND school_cd = ? ";*/
-        String order = " ORDER BY subject_cd";
+        String condition = " on a.student_no = b.student_no and a.subject_cd = b.subject_cd and a.class_num = b.class_num";
+
+        String join = " left join (select test.student_no, test.subject_cd, test.school_cd, test.no, test.point, test.class_num from test "
+        		+ "join student on test.student_no = student.no where student.ent_year = ? "
+        		+ "and subject_cd = ? and test.class_num = ? and test.school_cd = ? and test.no = 2 order by test.student_no) as b";
+
+        String join2 = " join student on a.student_no = student.no";
+
+        String order = " order by a.student_no asc, a.no asc";
 
         try {
-            ps = connection.prepareStatement(BASE_SQL + condition + order);
+            ps = connection.prepareStatement(BASE_SQL + from + join + condition + join2 + order);
             //値をバインド
             ps.setInt(1, entYear);
-            ps.setString(2, classNum);
-            ps.setString(3, subject.getCd());
+            ps.setString(2, subject.getCd());
+            ps.setString(3, classNum);
             ps.setString(4, school.getCd());
-            //psの実行
+            ps.setInt(5, entYear);
+			ps.setString(6, subject.getCd());
+			ps.setString(7, classNum);
+			ps.setString(8, school.getCd());
             rSet = ps.executeQuery();
             list = postFilter(rSet);
         } catch (Exception e) {
