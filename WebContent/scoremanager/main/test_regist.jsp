@@ -12,7 +12,7 @@ pageEncoding="UTF-8" %>
 		<section class="me=4">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績検索画面</h2>
 
-			<form method="get">
+			<form action="TestRegist.action" method="get">
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					<div class="col-2">
 					    <label class="form-label" for="test-f1-select">入学年度</label>
@@ -49,10 +49,10 @@ pageEncoding="UTF-8" %>
 					    	<option value="2" <c:if test="${2==f4}">selected</c:if>>2</option>
 					   	 </select>
 					</div>
-					<div class="col-4 text-center">
+					<div class="col-2 text-center">
 				    	<button class="btn btn-secondary" id="filter-button">検索</button>
 				    </div>
-				    <div class="mt-2 text-warning">${errors.get("f1") }</div>
+				    <div class="mt-2 text-warning">${errors.get("a") }</div>
 			    </div>
 			</form>
 
@@ -90,7 +90,7 @@ pageEncoding="UTF-8" %>
 				            </c:forEach>
 					    </table>
 					    <div>
-					       	<button class="btn btn-secondary" id="filter-button">登録して終了</button>
+					       	<button type="submit" class="btn btn-secondary" id="filter-button">登録して終了</button>
 				        </div>
 					</c:when>
 					<c:otherwise>
