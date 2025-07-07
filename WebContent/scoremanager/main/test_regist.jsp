@@ -49,7 +49,7 @@ pageEncoding="UTF-8" %>
 					    	<option value="2" <c:if test="${2==f4}">selected</c:if>>2</option>
 					   	 </select>
 					</div>
-					<div class="col-4">
+					<div class="col-4 text-center">
 				    	<button class="btn btn-secondary" id="filter-button">検索</button>
 				    </div>
 				    <div class="mt-2 text-warning">${errors.get("f1") }</div>
