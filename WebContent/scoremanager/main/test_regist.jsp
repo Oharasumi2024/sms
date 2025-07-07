@@ -50,7 +50,7 @@ pageEncoding="UTF-8" %>
 					   	 </select>
 					</div>
 					<div class="col-4">
-				    	<button class="btn btn-secondary" id="button_1">検索</button>
+				    	<button type="submit" class="btn btn-secondary" id="filter-button">検索</button>
 				    </div>
 				    <div class="mt-2 text-warning">${errors.get("f1") }</div>
 			    </div>
