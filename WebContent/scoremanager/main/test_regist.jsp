@@ -12,7 +12,7 @@ pageEncoding="UTF-8" %>
 		<section class="me=4">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績検索画面</h2>
 
-			<form action="TestRegist.action" method="get">
+			<form method="get">
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					<div class="col-2">
 					    <label class="form-label" for="test-f1-select">入学年度</label>
@@ -58,7 +58,7 @@ pageEncoding="UTF-8" %>
 
 			<form action="TestRegistExecute.action" method="get">
 				<c:choose>
-					<c:when test="${test.size()>0 }">
+					<c:when test="${testlist.size()>0 }">
 						<div>科目：${subject_name }（${f4}回目）</div>
 					        <table class="table table-hover">
 					            <tr>
