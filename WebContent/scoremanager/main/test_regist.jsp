@@ -87,8 +87,11 @@ pageEncoding="UTF-8" %>
 					               		<div class="text-warning">${mis[test.student.no]}</div>
 					               </c:if>
 				                </tr>
+				                <input type="hidden" name="regist" value="${test.student.no }">
 				            </c:forEach>
 					    </table>
+					    <input type="hidden" name="count" value="${f4 }">
+						<input type="hidden" name="subject" value="${f3 }">
 					    <div>
 					       	<button type="submit" class="btn btn-secondary" id="filter-button">登録して終了</button>
 				        </div>
