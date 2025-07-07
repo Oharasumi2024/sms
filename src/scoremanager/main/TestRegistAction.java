@@ -1,11 +1,11 @@
 package scoremanager.main;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,84 +22,86 @@ import tool.Action;
 public class TestRegistAction extends Action{
 
     public void execute(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
+            throws Exception {
 
         // セッション／ログインチェック
         HttpSession session = req.getSession(false);
         Teacher teacher = (Teacher)session.getAttribute("user");
 
         //ローカル変数の指定
-        String entYearStr = "";
+        String entYearStr = null; //入力された
+        int ent_year = 0;
         String ClassNum = "";
         String subject = "";
-        String test_times = "";
+        String countStr = null;
+        int count = 0;
+        ClassNumDao classnumDao = new ClassNumDao();
+        SubjectDao subjectDao = new SubjectDao();
+        TestDao testDao = new TestDao();
         LocalDate todaysDate = LocalDate.now(); // LocalDateインスタンスを取得
 		int year = todaysDate.getYear(); // 現在の年を取得
-
+		Map<String, String> errors = new HashMap<>(); //エラー
         School school = teacher.getSchool();
 
         //  リクエストパラメータ取得
         entYearStr = req.getParameter("f1");
 		ClassNum = req.getParameter("f2");
 		subject = req.getParameter("f3");
-		test_times = req.getParameter("f4");
+		countStr = req.getParameter("f4");
 
-        List<String> errors = new ArrayList<>();
+		//DBから取得
+		List<String>class_num_list = classnumDao.filter(school); //クラス情報
+		List<Subject>subject_list = subjectDao.filter(school);
+
+		if (entYearStr != null) {
+			ent_year = Integer.parseInt(entYearStr);
+		}
+		if (countStr != null) {
+			count = Integer.parseInt(countStr);
+		}
+
 		// リストを初期化
 		List<Integer> entYearSet = new ArrayList<>();
-		// 10年前から1年後まで年をリストに追加
-		for (int i = year - 10; i < year + 1; i++) {
+		// 10年前から10年後まで年をリストに追加
+		for (int i = year - 10; i < year + 11; i++) {
 			entYearSet.add(i);
 		}
 
+		// リストを初期化
+		List<Integer> countSet = new ArrayList<>();
+		// 2回までセット
+		for (int i = 1; i < 3 ; i++) {
+			countSet.add(i);
+		}
 
-        if (entYearStr == null || entYearStr.isEmpty()
-         || ClassNum == null || ClassNum.isEmpty()
-         || subject == null || subject.isEmpty()
-         || test_times == null || test_times.isEmpty()) {
-            errors.add("入学年度とクラスと科目と回数を選択してください");
-        }
+		// 検索
+				if (ent_year == 0 && ClassNum == null && subject == null && count == 0) {
 
-        try {
-            List<Subject> subjectList = new SubjectDao().filter(school);
-            List<String> classNumList = new ClassNumDao().filter(school);
-            req.setAttribute("subject_list", subjectList);
-            req.setAttribute("class_num_list", classNumList);
-        } catch (Exception e) {
-            errors.add("データの取得に失敗しました");
-        }
+				} else if (ent_year != 0 && !(ClassNum.equals("0")) && !(subject.equals("0")) && count != 0) {
+					//テストリスト
+					List<Test>testlist = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, school), count, school);
+					//科目名
+					String subject_name = subjectDao.get(subject, school).getName();
+					//リクエストに検索結果をセット
+					req.setAttribute("testlist", testlist);
+					//リクエストに科目名をセット
+					req.setAttribute("subject_name", subject_name);
+				} else {
+					errors.put("a", "入学年度とクラスと科目と回数を選択してください");
+					req.setAttribute("errors", errors);
+				}
 
-        //  入力済み値をセット
-        req.setAttribute("ent_year", entYearSet);
-        req.setAttribute("class_num", ClassNum);
-        req.setAttribute("subject_id", subject);
-        req.setAttribute("test_times", test_times);
 
-        //  成績データ取得（パラメータが揃っていれば）
-        if (errors.isEmpty()) {
-            try {
-                int ent_year = Integer.parseInt(entYearStr);
-                String classNum = ClassNum;
-                String subjectCd = subject;
-                int times = Integer.parseInt(test_times);
-
-                Subject subj = new Subject();
-                subj.setCd(subjectCd);
-
-                TestDao testDao = new TestDao();
-                List<Test> testList = testDao.filter(ent_year, classNum, subj, times, school);
-                req.setAttribute("test_list", testList);
-
-            } catch (NumberFormatException nfe) {
-            } catch (Exception ex) {
-                errors.add("既存の成績データ取得に失敗しました");
-            }
-        }
-
-        // エラー or 次画面へフォワード
-        if (!errors.isEmpty()) {
-            req.setAttribute("errors", errors);
-        }
+				//レスポンス値をセット6
+				//リクエストに値をセット
+				req.setAttribute("f1", ent_year);
+				req.setAttribute("f2", ClassNum);
+				req.setAttribute("f3", subject);
+				req.setAttribute("f4", count);
+				req.setAttribute("entYear", entYearSet);
+				req.setAttribute("class_num_list", class_num_list);
+				req.setAttribute("subject_list", subject_list);
+				req.setAttribute("countList", countSet);
 
         req.getRequestDispatcher("test_regist.jsp").forward(req, res);
     }
