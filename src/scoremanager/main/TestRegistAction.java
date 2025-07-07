@@ -87,7 +87,7 @@ public class TestRegistAction extends Action{
 					//リクエストに科目名をセット
 					req.setAttribute("subject_name", subject_name);
 				} else {
-					errors.put("a", "入学年度とクラスと科目と回数を選択してください");
+					errors.put("e1", "入学年度とクラスと科目と回数を選択してください");
 					req.setAttribute("errors", errors);
 				}
 

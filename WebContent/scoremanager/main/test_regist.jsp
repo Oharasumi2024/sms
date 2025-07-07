@@ -68,7 +68,7 @@ pageEncoding="UTF-8" %>
 					                <th>氏名</th>
 					                <th>点数</th>
 					            </tr>
-					            <c:forEach var="test" items="${test}">
+					            <c:forEach var="test" items="${testlist}">
 					                <tr>
 					                    <td>${test.student.entYear}</td>
 					                    <td>${test.student.classNum}</td>
