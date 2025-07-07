@@ -80,6 +80,7 @@ public class TestRegistAction extends Action{
 				} else if (ent_year != 0 && !(ClassNum.equals("0")) && !(subject.equals("0")) && count != 0) {
 					//テストリスト
 					List<Test>testlist = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, school), count, school);
+					System.out.println("debug_testlist.size():" + testlist.size());
 					//科目名
 					String subject_name = subjectDao.get(subject, school).getName();
 					//リクエストに検索結果をセット
@@ -87,7 +88,7 @@ public class TestRegistAction extends Action{
 					//リクエストに科目名をセット
 					req.setAttribute("subject_name", subject_name);
 				} else {
-					errors.put("a", "入学年度とクラスと科目と回数を選択してください");
+					errors.put("e1", "入学年度とクラスと科目と回数を選択してください");
 					req.setAttribute("errors", errors);
 				}
 

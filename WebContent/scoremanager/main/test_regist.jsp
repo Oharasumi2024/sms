@@ -49,16 +49,16 @@ pageEncoding="UTF-8" %>
 					    	<option value="2" <c:if test="${2==f4}">selected</c:if>>2</option>
 					   	 </select>
 					</div>
-					<div class="col-4">
+					<div class="col-2 text-center">
 				    	<button class="btn btn-secondary" id="filter-button">検索</button>
 				    </div>
-				    <div class="mt-2 text-warning">${errors.get("f1") }</div>
+				    <div class="mt-2 text-warning">${errors.get("a") }</div>
 			    </div>
 			</form>
 
 			<form action="TestRegistExecute.action" method="get">
 				<c:choose>
-					<c:when test="${test.size()>0 }">
+					<c:when test="${testlist.size()>0 }">
 						<div>科目：${subject_name }（${f4}回目）</div>
 					        <table class="table table-hover">
 					            <tr>
@@ -68,7 +68,7 @@ pageEncoding="UTF-8" %>
 					                <th>氏名</th>
 					                <th>点数</th>
 					            </tr>
-					            <c:forEach var="test" items="${test}">
+					            <c:forEach var="test" items="${testlist}">
 					                <tr>
 					                    <td>${test.student.entYear}</td>
 					                    <td>${test.student.classNum}</td>
@@ -90,7 +90,7 @@ pageEncoding="UTF-8" %>
 				            </c:forEach>
 					    </table>
 					    <div>
-					       	<button class="btn btn-secondary" id="filter-button">登録して終了</button>
+					       	<button type="submit" class="btn btn-secondary" id="filter-button">登録して終了</button>
 				        </div>
 					</c:when>
 					<c:otherwise>
