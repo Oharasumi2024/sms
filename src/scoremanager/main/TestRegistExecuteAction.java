@@ -14,8 +14,9 @@ import bean.Test;
 import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestDao;
+import tool.Action;
 
-public class TestRegistExecuteAction {
+public class TestRegistExecuteAction extends Action{
 
     public void execute(HttpServletRequest req, HttpServletResponse res)
             throws Exception {
