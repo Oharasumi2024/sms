@@ -50,8 +50,12 @@ public class TestRegistExecuteAction extends Action{
         for (String studentNo: regist){
 
         	/* 学生一人分のリクエストパラメータの取得 */
-        	point = Integer.parseInt(req.getParameter("point_" + studentNo));
 
+        	if (req.getParameter("point_" + studentNo).isEmpty()){
+        		point = 0;
+        	}else {
+        		point = Integer.parseInt(req.getParameter("point_" + studentNo));
+        	}
         	/* 得点のチェック */
         	if (point < 0 || point > 100) {
                 error.put(studentNo,"0～100の範囲で入力してください");
