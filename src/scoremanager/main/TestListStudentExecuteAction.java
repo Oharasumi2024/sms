@@ -79,8 +79,12 @@ public class TestListStudentExecuteAction extends Action {
 
 
 		student = studentDao.get(student_no);
-
+		if (student == null) {
+		    errors.put("student", "該当する学生が存在しません。");
+		    testliststudent = new ArrayList<>();
+		} else {
        testliststudent = testliststudentdao.filter(student);
+		}
 
 
 
@@ -95,6 +99,7 @@ public class TestListStudentExecuteAction extends Action {
         req.setAttribute("test_list",testliststudent);
         req.setAttribute("searchType", searchType);
         req.setAttribute("student",student);
+        req.setAttribute("errors", errors);
 		req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
 
 
