@@ -83,7 +83,7 @@ pageEncoding="UTF-8" %>
 					                        	<input type="text" id="point_${test.student.no}" name="point_${test.student.no}" value="">
 					                        </c:otherwise>
 					                    </c:choose>
-					               <c:if test="${mis[test.student.no] != null }">
+					               <c:if test="${error[test.student.no] != null }">
 					               		<div class="text-warning">${error[test.student.no]}</div>
 					               </c:if>
 				                </tr>
