@@ -93,7 +93,7 @@ public class TestListStudentExecuteAction extends Action {
         req.setAttribute("test_list",testliststudent);
         req.setAttribute("searchType", searchType);
         req.setAttribute("student",student);
-		req.getRequestDispatcher("test_list.jsp").forward(req, res);
+		req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
 
 
 }
