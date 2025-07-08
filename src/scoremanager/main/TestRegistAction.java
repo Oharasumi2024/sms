@@ -75,22 +75,23 @@ public class TestRegistAction extends Action{
 		}
 
 		// 検索
-				if (ent_year == 0 && ClassNum == null && subject == null && count == 0) {
+		boolean isValid =
+			    ent_year != 0 &&
+			    ClassNum != null && !ClassNum.equals("0") &&
+			    subject != null && !subject.equals("0") &&
+			    count != 0;
 
-				} else if (ent_year != 0 && !(ClassNum.equals("0")) && !(subject.equals("0")) && count != 0) {
-					//テストリスト
-					List<Test>testlist = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, school), count, school);
-					System.out.println("debug_testlist.size():" + testlist.size());
-					//科目名
-					String subject_name = subjectDao.get(subject, school).getName();
-					//リクエストに検索結果をセット
-					req.setAttribute("testlist", testlist);
-					//リクエストに科目名をセット
-					req.setAttribute("subject_name", subject_name);
-				} else {
-					errors.put("e1", "入学年度とクラスと科目と回数を選択してください");
-					req.setAttribute("errors", errors);
-				}
+			if (isValid) {
+			    // 正常な検索処理
+			    List<Test> testlist = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, school), count, school);
+			    String subject_name = subjectDao.get(subject, school).getName();
+
+			    req.setAttribute("testlist", testlist);
+			    req.setAttribute("subject_name", subject_name);
+			} else {
+			    errors.put("e1", "入学年度とクラスと科目と回数を選択してください");
+			    req.setAttribute("errors", errors);
+			}
 
 
 				//レスポンス値をセット6
