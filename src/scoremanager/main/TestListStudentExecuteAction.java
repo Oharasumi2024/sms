@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.Student;
+import bean.Subject;
 import bean.Teacher;
 import bean.TestListStudent;
 import dao.ClassNumDao;
@@ -33,6 +34,7 @@ public class TestListStudentExecuteAction extends Action {
 		String classNum = ""; // 入力されたクラス番号
 		String subjectcd = ""; // 入力された科目
 		Student student=new Student();
+
 		int entYear = 0; // 入学年度
 		String student_no="";//入力された学生番号
 		List<Student> subjects = null; // 学生リスト
@@ -73,7 +75,7 @@ public class TestListStudentExecuteAction extends Action {
 		List<String> list = classNumDao.filter(teacher.getSchool());
 
 
-		List<Student> list2=studentDao.filter(teacher.getSchool(),false);
+		List<Subject> list2=subjectDao.filter(teacher.getSchool());
 
 
 		student = studentDao.get(student_no);
