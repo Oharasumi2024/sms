@@ -52,7 +52,7 @@ pageEncoding="UTF-8" %>
 					<div class="col-2 text-center">
 				    	<button class="btn btn-secondary" id="filter-button">検索</button>
 				    </div>
-				    <div class="mt-2 text-warning">${errors.get("a") }</div>
+				    <div class="mt-2 text-warning">${errors.get("e1") }</div>
 			    </div>
 			</form>
 
@@ -84,14 +84,14 @@ pageEncoding="UTF-8" %>
 					                        </c:otherwise>
 					                    </c:choose>
 					               <c:if test="${mis[test.student.no] != null }">
-					               		<div class="text-warning">${mis[test.student.no]}</div>
+					               		<div class="text-warning">${error[test.student.no]}</div>
 					               </c:if>
 				                </tr>
 				                <input type="hidden" name="regist" value="${test.student.no }">
 				            </c:forEach>
 					    </table>
-					    <input type="hidden" name="count" value="${f4 }">
-						<input type="hidden" name="subject" value="${f3 }">
+					    	<input type="hidden" name="count" value="${f4 }">
+							<input type="hidden" name="subject" value="${f3 }">
 					    <div>
 					       	<button type="submit" class="btn btn-secondary" id="filter-button">登録して終了</button>
 				        </div>
