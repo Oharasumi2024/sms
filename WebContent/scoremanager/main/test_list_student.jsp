@@ -74,6 +74,7 @@
 <div class="ms-4 text-danger">該当する成績データが見つかりませんでした。</div>
 </c:when>
 <c:otherwise>
+<p>氏名;${student.name}(${student.no })</p>
 <div class="table-responsive px-3">
 <table class="table table-bordered table-hover">
 
