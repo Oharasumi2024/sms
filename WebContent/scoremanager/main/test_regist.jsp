@@ -73,20 +73,16 @@ pageEncoding="UTF-8" %>
 					                <tr>
 					                    <td>${test.student.entYear}</td>
 					                    <td>${test.student.classNum}</td>
-					                    <td>${test.student.name}</td>
 					                    <td>${test.student.no}</td>
-					                    <td>
-					                    <c:choose>
-					                    	<c:when test="{$test.no !=0}">
-					                    		<input type="text" id="point_${test.student.no}" name="point_${test.student.no}" value="${test.point }">
-					                        </c:when>
-					                        <c:otherwise>
-					                        	<input type="text" id="point_${test.student.no}" name="point_${test.student.no}" value="">
-					                        </c:otherwise>
-					                    </c:choose>
-					               <c:if test="${error[test.student.no] != null }">
-					               		<div class="text-warning">${error[test.student.no]}</div>
-					               </c:if>
+					                    <td>${test.student.name}</td>
+					                    <td><input type="text" name="point_${test.student.no }"
+					                    	<c:if test="${test.no != 0}">value="${test.point }"</c:if>
+					                    	value="">
+					                    	<div class="mt-2 text-warning">
+					                    	<c:if test="${not empty error[test.student.no]}">
+					                    	${error[test.student.no]}</c:if>
+					                    	</div>
+					                    </td>
 				                </tr>
 				                <input type="hidden" name="regist" value="${test.student.no }">
 				            </c:forEach>
