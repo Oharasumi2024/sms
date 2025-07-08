@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h3 class="h5 my-3 ms-3">学生別成績一覧</h3>
+<p>氏名;${student.name}(${student.no })</p>
 
 <c:choose>
 <c:when test="${empty test_list}">
@@ -19,11 +19,12 @@
 </tr>
 </thead>
 <tbody>
+
 <c:forEach var="test" items="${test_list}">
 <tr>
-<td>${test.subject.name}</td>
-<td>${test.subject.cd}</td>
-<td>${test.no}</td>
+<td>${test.subjectName}</td>
+<td>${test.subjectCd}</td>
+<td>${test.num}</td>
 <td>
 <c:choose>
 <c:when test="${test.point == null}">
