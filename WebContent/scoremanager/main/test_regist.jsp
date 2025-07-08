@@ -13,6 +13,7 @@ pageEncoding="UTF-8" %>
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績検索画面</h2>
 
 			<form method="get">
+			<input type="hidden" name="search" value="true">
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					<div class="col-2">
 					    <label class="form-label" for="test-f1-select">入学年度</label>
