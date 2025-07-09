@@ -46,6 +46,8 @@ public class TestListSubjectExecuteAction extends Action {
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
 		boolean isAttend=false;//在学フラグ
 
+		String searchType=req.getParameter("f");
+
 
 
 		//リクエストパラメーターの取得
@@ -70,23 +72,33 @@ public class TestListSubjectExecuteAction extends Action {
 		List<Subject> list2=subjectDao.filter(teacher.getSchool());
         subject=subjectDao.get(subjectcd,teacher.getSchool());
         testlistsubjects = testlistsubjectdao.filter(entYear , classNum ,subject, teacher.getSchool());
+        if (testlistsubjects == null || testlistsubjects.isEmpty()) {
+            errors.put("notfound", "学生情報が存在しませんでした。");
+        }
+        req.setAttribute("errors", errors);
 
 
 
 		req.setAttribute("f1", entYear);
 		req.setAttribute("f2", classNum);
-		req.setAttribute("f3", subject);
+		req.setAttribute("f3", subjectcd);
 		req.setAttribute("f4", student_no);
 		req.setAttribute("class_num_set", list);
 		req.setAttribute("ent_year_set", entYearSet);
 		req.setAttribute("subject_set", list2);
         req.setAttribute("testlistsubjects",testlistsubjects);
+        req.setAttribute("searchType", searchType);
+        req.setAttribute("subject", subject);
 		req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+		if (errors.isEmpty()) { // エラーが出なかった場合
+			req.getRequestDispatcher("test_list_subject.jsp").forward(req , res);
+		}else{ //エラーが出た場合
+			req.getRequestDispatcher("test_list.jsp").forward(req , res);
+		}
 
 
 
 	}
 
 }
-
 

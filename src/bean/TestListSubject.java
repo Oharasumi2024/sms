@@ -3,6 +3,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -17,7 +18,7 @@ private String studentName;
 
 private String classNum;
 
-private Map<Integer, Integer> points;
+private Map<Integer, Integer> points = new HashMap<>();
 
 public int getEntYear(){
 	return entYear;
@@ -57,7 +58,7 @@ public void setPoints(Map<Integer,Integer> points){
 public String getPoint(int key){
 	return  Integer.toString(points.get(key));
 }
-public void putPoint(int value , int key){
+public void putPoint(int  key, int  value){
  this.points.put(key, value);
 }
 

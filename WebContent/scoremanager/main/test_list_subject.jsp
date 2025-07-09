@@ -4,6 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/common/base.jsp" >
 
+	<c:param name="title">
+		得点管理システム
+	</c:param>
+
 	<c:param name="scripts"></c:param>
 
 	<c:param name="content">
@@ -91,9 +95,6 @@
 
   				</c:when>
 			</c:choose>
-			<c:param name="scripts"></c:param>
-
-
 
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 
@@ -104,8 +105,9 @@
 					<div class="mt-2 text-warning">${errors.get("f1") }</div>
 				</div>
 
-                  	<div>氏名：${students.size() }件</div>
+                  	<div>氏名：${testlistsubjects.size() }件</div>
 					<table class="table table-hover">
+
 
 						<tr>
 						<th>入学年度</th>
@@ -114,7 +116,6 @@
 							<th>氏名</th>
 							<th>1回</th>
 							<th>2回</th>
-
 
 
 						</tr>
