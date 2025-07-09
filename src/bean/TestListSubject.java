@@ -18,6 +18,7 @@ private String studentName;
 
 private String classNum;
 
+<<<<<<< HEAD
 private Map<Integer, Integer> points = new HashMap<>();
 
 public int getEntYear(){
@@ -59,6 +60,53 @@ public String getPoint(int key){
 	return  Integer.toString(points.get(key));
 }
 public void putPoint(int  key, int  value){
+=======
+private Map<Integer, Integer> points  = new  HashMap<>();
+
+public int getEntYear(){
+	return entYear;
+}
+public void setYear(int entYear){
+this.entYear=entYear;
+}
+
+public String getStudentNo(){
+	return studentNo;
+}
+public void setStudentNo( String studentNo){
+	this.studentNo=studentNo;
+}
+public String getStudentName(){
+return studentName;
+
+}
+public void setStudentName(String studentName){
+	this.studentName=studentName;
+}
+public String getClassNum(){
+	return classNum;
+}
+public void setClassNum(String classNum){
+	this.classNum=classNum;
+}
+public Map<Integer,Integer> getPoints(){
+return points;
+}
+public void setPoints(Map<Integer,Integer> points){
+	this.points=points;
+}
+
+
+public String getPoint(int key) {
+	    Integer point = points.get(key);
+	    if (point == null) {
+	        return "-"; // または空文字 "" など、表示したい未登録時の文字列
+	    }
+	    return point.toString();
+	}
+
+public void putPoint(int key , int value){
+>>>>>>> branch 'master' of https://github.com/Oharasumi2024/sms.git
  this.points.put(key, value);
 }
 

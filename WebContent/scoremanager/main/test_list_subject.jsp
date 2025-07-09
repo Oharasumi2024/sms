@@ -47,7 +47,7 @@
 							<option value="0">--------</option>
 							<c:forEach var="subject" items="${subject_set }">
 								<%-- 現在のsubjectと選択されていたf3が一致していた場合selectedを追記 --%>
-								<option value="${subject.name }" <c:if test="${subject.name==f3 }">selected</c:if>>${subject.name }</option>
+								<option value="${subject.cd }" <c:if test="${subject.cd==f3 }">selected</c:if>>${subject.name }</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -72,9 +72,10 @@
 					<div class="col-2 text-center" style="display:flex; justify-content:center; align-items:center;">
 						<button class="btn btn-secondary" id="button_2">検索</button>
 					</div>
-					<div class="col-4"><input type="hidden" name="f" value="st"></div>
+					<div class="col-4"><input type="hidden" name="f" value="sj"></div>
 				</div>
 			</form>
+<<<<<<< HEAD
 			</div>
 			<c:choose>
  				 <c:when test="${empty searchType}">
@@ -95,11 +96,23 @@
 
   				</c:when>
 			</c:choose>
+=======
+		</div>
+<c:if test="${not empty errors.notfound}">
+  <div>
+    ${errors.notfound}
+  </div>
+</c:if>
 
-				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 
-				<div class="col-2 text-center">
+>>>>>>> branch 'master' of https://github.com/Oharasumi2024/sms.git
 
+
+<c:choose>
+  <c:when test="${not empty subject}">
+    <p>科目：${subject.name}</p>
+
+<<<<<<< HEAD
 
 					</div>
 					<div class="mt-2 text-warning">${errors.get("f1") }</div>
@@ -136,6 +149,43 @@
 						</c:forEach>
 					</table>
 
+=======
+<c:if test="${not empty testlistsubjects}">
+  <div class="table-responsive px-3">
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>入学年度</th>
+        <th>クラス</th>
+        <th>学生番号</th>
+        <th>氏名</th>
+        <th>1回</th>
+        <th>2回</th>
+      </tr>
+      <c:forEach var="subjects" items="${testlistsubjects}">
+        <tr>
+          <td>${subjects.entYear}</td>
+          <td>${subjects.classNum }</td>
+          <td>${subjects.studentNo }</td>
+          <td>${subjects.studentName }</td>
+          <td>${subjects.getPoint(1) }</td>
+          <td>${subjects.getPoint(2) }</td>
+        </tr>
+      </c:forEach>
+    </table>
+  </div>
+</c:if>
+<c:if test="${empty testlistsubjects}">
+  <p class="text-danger">該当する成績情報が存在しません。</p>
+</c:if>
+  </c:when>
+  <c:otherwise>
+    <c:if test="${not empty errors.student}">
+      <p>${errors.student}</p>
+    </c:if>
+</c:otherwise>
+</c:choose>
+>>>>>>> branch 'master' of https://github.com/Oharasumi2024/sms.git
 		</section>
 	</c:param>
+
 </c:import>

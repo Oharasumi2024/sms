@@ -47,35 +47,33 @@ public class TestRegistExecuteAction extends Action{
 
 
         /* 学生番号配列分ループ処理 */
-        for (String studentNo: regist){
+        for (String studentNo : regist) {
+            String pointStr = req.getParameter("point_" + studentNo);
+            try {
+                if (pointStr == null || pointStr.isEmpty()) {
+                    point = 0;
+                } else {
+                    point = Integer.parseInt(pointStr);
+                }
 
-        	/* 学生一人分のリクエストパラメータの取得 */
-
-        	if (req.getParameter("point_" + studentNo).isEmpty()){
-        		point = 0;
-        	}else {
-        		point = Integer.parseInt(req.getParameter("point_" + studentNo));
-        	}
-        	/* 得点のチェック */
-        	if (point < 0 || point > 100) {
-                error.put(studentNo,"0～100の範囲で入力してください");
-                req.setAttribute("error", error);
+                if (point < 0 || point > 100) {
+                    throw new NumberFormatException(); // 範囲外も例外として扱う
+                }
+            } catch (NumberFormatException e) {
+                error.put(studentNo, "0～100の範囲で入力してください");
+                /*req.setAttribute("errors", error);*/
                 break;
             }
-        	else{
 
-            	/* TestBeanを1人分作成して、リストに追加する */
-        		Test test = new Test();
+            Test test = new Test();
+            test.setStudent(studentDao.get(studentNo));
+            test.setClassNum(studentDao.get(studentNo).getClassNum());
+            test.setSubject(subjectDao.get(subject, teacher.getSchool()));
+            test.setSchool(teacher.getSchool());
+            test.setNo(count);
+            test.setPoint(point);
 
-        		test.setStudent(studentDao.get(studentNo));
-        		test.setClassNum(studentDao.get(studentNo).getClassNum());
-        		test.setSubject(subjectDao.get(subject, teacher.getSchool()));
-        		test.setSchool(teacher.getSchool());
-        		test.setNo(count);
-        		test.setPoint(point);
-
-        		testlist.add(test);
-        	}
+            testlist.add(test);
         }
 
         if (error.isEmpty()) {
@@ -83,7 +81,8 @@ public class TestRegistExecuteAction extends Action{
         	testDao.save(testlist);
         	req.getRequestDispatcher("test_regist_done.jsp").forward(req,res);
         } else {
-        	req.getRequestDispatcher("TestRegist.action").forward(req, res);
+        	req.setAttribute("errors", error);
+        	req.getRequestDispatcher("test_regist.jsp").forward(req, res);
         }
 
 

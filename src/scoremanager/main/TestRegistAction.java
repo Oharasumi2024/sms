@@ -42,6 +42,9 @@ public class TestRegistAction extends Action{
 		int year = todaysDate.getYear(); // 現在の年を取得
 		Map<String, String> errors = new HashMap<>(); //エラー
         School school = teacher.getSchool();
+        String searchParam = req.getParameter("search");
+        boolean didSearch = "true".equals(searchParam);
+
 
         //  リクエストパラメータ取得
         entYearStr = req.getParameter("f1");
@@ -75,23 +78,24 @@ public class TestRegistAction extends Action{
 		}
 
 		// 検索
-		boolean isValid =
-			    ent_year != 0 &&
-			    ClassNum != null && !ClassNum.equals("0") &&
-			    subject != null && !subject.equals("0") &&
-			    count != 0;
+		if (didSearch) {
+		    boolean isValid =
+		        ent_year != 0 &&
+		        ClassNum != null && !ClassNum.equals("0") &&
+		        subject != null && !subject.equals("0") &&
+		        count != 0;
 
-			if (isValid) {
-			    // 正常な検索処理
-			    List<Test> testlist = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, school), count, school);
-			    String subject_name = subjectDao.get(subject, school).getName();
-
-			    req.setAttribute("testlist", testlist);
-			    req.setAttribute("subject_name", subject_name);
-			} else {
-			    errors.put("e1", "入学年度とクラスと科目と回数を選択してください");
-			    req.setAttribute("errors", errors);
-			}
+		    if (isValid) {
+		        // 検索処理
+		        List<Test> testlist = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, school), count, school);
+		        String subject_name = subjectDao.get(subject, school).getName();
+		        req.setAttribute("testlist", testlist);
+		        req.setAttribute("subject_name", subject_name);
+		    } else {
+		        errors.put("e1", "入学年度とクラスと科目と回数を選択してください");
+		        req.setAttribute("errors", errors);
+		    }
+		}
 
 
 				//レスポンス値をセット6
