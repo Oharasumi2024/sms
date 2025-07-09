@@ -9,6 +9,7 @@ pageEncoding="UTF-8" %>
 
 	<c:param name="scripts"></c:param>
 	<c:param name="content">
+		<c:set var="errors" value="${requestScope.errors}" />
 		<section class="me=4">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績検索画面</h2>
 
@@ -75,20 +76,20 @@ pageEncoding="UTF-8" %>
 					                    <td>${test.student.classNum}</td>
 					                    <td>${test.student.no}</td>
 					                    <td>${test.student.name}</td>
-					                    <td><input type="text" name="point_${test.student.no }"
-					                    	<c:if test="${test.no != 0}">value="${test.point }"</c:if>
-					                    	value="">
-					                    	<div class="mt-2 text-warning">
-					                    	<c:if test="${not empty error[test.student.no]}">
-					                    	${error[test.student.no]}</c:if>
-					                    	</div>
-					                    </td>
-				                </tr>
+					                    <td>
+    										<input type="text" name="point_${test.student.no}" value="${test.no != 0 ? test.point : ''}">
+    										<div class="mt-2 text-warning">
+        										<c:if test="${not empty errors[test.student.no]}">
+            										${errors[test.student.no]}
+        										</c:if>
+        									</div>
+										</td>
+				                	</tr>
 				                <input type="hidden" name="regist" value="${test.student.no }">
-				            </c:forEach>
+				            	</c:forEach>
 					    </table>
-					    	<input type="hidden" name="count" value="${f4 }">
-							<input type="hidden" name="subject" value="${f3 }">
+					    	<input type="hidden" name="f4" value="${f4 }">
+							<input type="hidden" name="f3" value="${f3 }">
 					    <div>
 					       	<button type="submit" class="btn btn-secondary" id="filter-button">登録して終了</button>
 				        </div>

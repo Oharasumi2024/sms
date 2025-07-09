@@ -42,8 +42,8 @@ public class TestRegistExecuteAction extends Action{
 
         /* リクエストパラメータ取得 */
         regist = req.getParameterValues("regist");
-        count = Integer.parseInt(req.getParameter("count"));
-        subject = req.getParameter("subject");
+        count = Integer.parseInt(req.getParameter("f4"));
+        subject = req.getParameter("f3");
 
 
         /* 学生番号配列分ループ処理 */
@@ -61,8 +61,7 @@ public class TestRegistExecuteAction extends Action{
                 }
             } catch (NumberFormatException e) {
                 error.put(studentNo, "0～100の範囲で入力してください");
-                /*req.setAttribute("errors", error);*/
-                break;
+                continue;
             }
 
             Test test = new Test();
@@ -75,13 +74,18 @@ public class TestRegistExecuteAction extends Action{
 
             testlist.add(test);
         }
+        req.setAttribute("errors", error);
+        req.setAttribute("f4", count);
+        req.setAttribute("f3", subject);
 
         if (error.isEmpty()) {
             /* TestDaoで得点を保存する */
         	testDao.save(testlist);
         	req.getRequestDispatcher("test_regist_done.jsp").forward(req,res);
         } else {
-        	req.setAttribute("errors", error);
+
+        	List<Test> testlistTo = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, teacher.getSchool()), count, teacher.getSchool(5));
+        	req.setAttribute("testlist", testlistTo);
         	req.getRequestDispatcher("test_regist.jsp").forward(req, res);
         }
 
@@ -89,80 +93,4 @@ public class TestRegistExecuteAction extends Action{
 
 
 
-/*
-
-        String actionType = req.getParameter("action");
-        School school = teacher.getSchool();
-
-        if ("register".equals(actionType)) {
-            String subjectCd = req.getParameter("subject_cd");
-            String classNum = req.getParameter("class_num");
-            String testName = req.getParameter("test_name");
-            String testDate = req.getParameter("test_date");
-            String pointStr = req.getParameter("point");
-
-            List<String> errors = new ArrayList<>();
-            int point = Integer.parseInt(pointStr);
-            if (point < 0 || point > 100) {
-                errors.add("0～100の範囲で入力してください");
-            }
-
-            if (!errors.isEmpty()) {
-                req.setAttribute("errors", errors);
-                req.setAttribute("subject_cd", subjectCd);
-                req.setAttribute("class_num", classNum);
-                req.setAttribute("test_name", testName);
-                req.setAttribute("test_date", testDate);
-                req.setAttribute("point", point);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("test_regist.jsp");
-                dispatcher.forward(req, res);
-                return;
-            }
-
-            SubjectDao subjectDao = new SubjectDao();
-            Subject subject = subjectDao.get(subjectCd, school);
-
-            Test test = new Test();
-            test.setSchool(school);
-            test.setSubject(subject);
-            test.setClassNum(classNum);
-            test.setPoint(point);
-
-            TestDao testDao = new TestDao();
-            boolean ok = testDao.save(java.util.Collections.singletonList(test));
-
-
-            req.setAttribute("subject_cd", subjectCd);
-            req.setAttribute("class_num", classNum);
-            req.setAttribute("test_name", testName);
-            req.setAttribute("test_date", testDate);
-            req.setAttribute("point", pointStr);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("test_regist.jsp");
-            dispatcher.forward(req, res);
-
-        } else if ("reference".equals(actionType)) {
-        	 	String studentNo = req.getParameter("student_no");
-        	    String subjectCd = req.getParameter("subject_cd");
-        	    StudentDao studentDao = new StudentDao();
-        	    SubjectDao subjectDao = new SubjectDao();
-        	    TestDao testDao = new TestDao();
-
-        	    Student student = studentDao.get(studentNo);
-        	    Subject subject = subjectDao.get(subjectCd, school);
-
-        	    List<Test> testList = testDao.filter(
-        	        student.getEntYear(),
-        	        student.getClassNum(),
-        	        subject,
-        	        student.getNo(),
-        	        school
-        	    );
-
-        	    req.setAttribute("test_list", testList);
-        	    req.setAttribute("student", student);
-        	    RequestDispatcher dispatcher = req.getRequestDispatcher("test_regist_regist.jsp");
-        	    dispatcher.forward(req, res);
-*/
-
-    }
 }
