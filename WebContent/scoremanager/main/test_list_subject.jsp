@@ -47,13 +47,16 @@
 							</c:forEach>
 						</select>
 					</div>
+
 					<div class="form col-2 text-center" style="display:flex; justify-content:center; align-items:center;">
 						<button class="btn btn-secondary" id="button_1">検索</button>
 					</div>
 					<div><input type="hidden" name="f" value="sj"></div>
 				</div>
 			</form>
-
+<c:if test="${not empty errors.input}">
+  <p class="text-warning">${errors.input}</p>
+</c:if>
 			<hr style="color: #dee2e6 border: none; border-top: 1px dashed #999; margin: 30px auto; width: 90%" />
 
 			<form method="get" action="TestListStudentExecute.action">

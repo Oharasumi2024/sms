@@ -55,6 +55,34 @@ public class TestListSubjectExecuteAction extends Action {
 		classNum=req.getParameter("f2");
 		subjectcd=req.getParameter("f3");
 		student_no=req.getParameter("f4");
+        if (entYearStr == null || entYearStr.equals("0") ||
+        	    classNum == null || classNum.equals("0") ||
+        	    subjectcd == null || subjectcd.equals("0") || subjectcd.isEmpty()) {
+
+        	    errors.put("input", "入学年度とクラスと科目を入力してください。");
+        		if (entYearStr != null) {
+        			entYear=Integer.parseInt(entYearStr);
+        		}
+        		// リストを初期化
+        		List<Integer> entYearSet = new ArrayList<>();
+        		// 10年前から1年後まで年をリストに追加
+        		for (int i = year - 10; i < year + 1; i++) {
+        			entYearSet.add(i);
+        		}
+
+        	    // 各種データの再取得とリクエストスコープへのセット（画面再表示に必要）
+        	    req.setAttribute("f1", entYearStr);
+        	    req.setAttribute("f2", classNum);
+        	    req.setAttribute("f3", subjectcd);
+        	    req.setAttribute("f4", student_no);
+        	    req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
+        	    req.setAttribute("ent_year_set", entYearSet);
+        	    req.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
+        	    req.setAttribute("errors", errors);
+
+        	    req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+        	    return;
+        	}
 
 
 		if (entYearStr != null) {
@@ -72,6 +100,7 @@ public class TestListSubjectExecuteAction extends Action {
 		List<Subject> list2=subjectDao.filter(teacher.getSchool());
         subject=subjectDao.get(subjectcd,teacher.getSchool());
         testlistsubjects = testlistsubjectdao.filter(entYear , classNum ,subject, teacher.getSchool());
+
 
 		req.setAttribute("f1", entYear);
 		req.setAttribute("f2", classNum);
