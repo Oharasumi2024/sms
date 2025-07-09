@@ -40,7 +40,7 @@
 							<option value="0">--------</option>
 							<c:forEach var="subject" items="${subject_set }">
 								<%-- 現在のsubjectと選択されていたf3が一致していた場合selectedを追記 --%>
-								<option value="${subject.cd }" <c:if test="${subject.name==f3 }">selected</c:if>>${subject.name }</option>
+								<option value="${subject.cd }" <c:if test="${subject.cd==f3 }">selected</c:if>>${subject.name }</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -69,43 +69,47 @@
 				</div>
 			</form>
 			</div>
-<c:choose>
-<c:when test="${empty test_list}">
-<div class="ms-4 text-danger">該当する成績データが見つかりませんでした。</div>
-</c:when>
-<c:otherwise>
-<p>氏名;${student.name}(${student.no })</p>
-<div class="table-responsive px-3">
-<table class="table table-bordered table-hover">
 
-<tr>
-<th>科目名</th>
-<th>科目コード</th>
-<th>回数</th>
-<th>点数</th>
-</tr>
-<tbody>
-
-<c:forEach var="test" items="${test_list}">
-<tr>
-<td>${test.subjectName}</td>
-<td>${test.subjectCd}</td>
-<td>${test.num}</td>
-<td>
 <c:choose>
-<c:when test="${test.point == null}">
-                                        -
-</c:when>
+  <c:when test="${not empty student}">
+    <p>氏名：${student.name}（${student.no}）</p>
+
+    <c:if test="${empty test_list}">
+      <p>成績情報が存在しませんでした。</p>
+    </c:if>
+
+    <c:if test="${not empty test_list}">
+      <div class="table-responsive px-3">
+        <table class="table table-bordered table-hover">
+          <tr>
+            <th>科目名</th>
+            <th>科目コード</th>
+            <th>回数</th>
+            <th>点数</th>
+          </tr>
+          <tbody>
+            <c:forEach var="test" items="${test_list}">
+              <tr>
+                <td>${test.subjectName}</td>
+                <td>${test.subjectCd}</td>
+                <td>${test.num}</td>
+                <td>
+                  <c:choose>
+                    <c:when test="${test.point == null}">-</c:when>
+                    <c:otherwise>${test.point}</c:otherwise>
+                  </c:choose>
+                </td>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+      </div>
+    </c:if>
+  </c:when>
 <c:otherwise>
-                                    ${test.point}
-</c:otherwise>
-</c:choose>
-</td>
-</tr>
-</c:forEach>
-</tbody>
-</table>
-</div>
+    <c:if test="${not empty errors.student}">
+      <p>${errors.student}</p>
+    </c:if>
 </c:otherwise>
 </c:choose>
 </c:param>

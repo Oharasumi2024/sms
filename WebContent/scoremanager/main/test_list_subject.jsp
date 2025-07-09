@@ -1,12 +1,8 @@
-
+<%-- 20250709 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/common/base.jsp" >
-
-	<c:param name="title">
-		得点管理システム
-	</c:param>
 
 	<c:param name="scripts"></c:param>
 
@@ -75,81 +71,12 @@
 					<div class="col-4"><input type="hidden" name="f" value="sj"></div>
 				</div>
 			</form>
-<<<<<<< HEAD
-			</div>
-			<c:choose>
- 				 <c:when test="${empty searchType}">
-   				 <div>
-     				 <p style="color: aqua;">
-      				  科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
-     				 </p>
-    				</div>
- 				 </c:when>
-
-
-  				<c:when test="${searchType == 'st'}">
-   				 <jsp:include page="test_list_student.jsp" />
-  				</c:when>
-
-  				<c:when test="${searchType == 'sj'}">
-    				<jsp:include page="test_list_subject.jsp" />
-
-  				</c:when>
-			</c:choose>
-=======
 		</div>
-<c:if test="${not empty errors.notfound}">
-  <div>
-    ${errors.notfound}
-  </div>
-</c:if>
-
-
->>>>>>> branch 'master' of https://github.com/Oharasumi2024/sms.git
-
 
 <c:choose>
   <c:when test="${not empty subject}">
     <p>科目：${subject.name}</p>
 
-<<<<<<< HEAD
-
-					</div>
-					<div class="mt-2 text-warning">${errors.get("f1") }</div>
-				</div>
-
-                  	<div>氏名：${testlistsubjects.size() }件</div>
-					<table class="table table-hover">
-
-
-						<tr>
-						<th>入学年度</th>
-							<th>学生番号</th>
-							<th>クラス</th>
-							<th>氏名</th>
-							<th>1回</th>
-							<th>2回</th>
-
-
-						</tr>
-						<c:forEach var="subjects" items="${subjects}">
-							<tr>
-								<td>${subjects.entYear}</td>
-								<td>${subjects.studentNo }</td>
-								<td>${subjects.studentName }</td>
-								<td>${subjects.classNum }</td>
-								<td>${subjects.points1}</td>
-								<td>${subjects.points2 }
-                                 <td><td/>
-								<td class="text-center">
-
-								</td>
-								<td></td>
-							</tr>
-						</c:forEach>
-					</table>
-
-=======
 <c:if test="${not empty testlistsubjects}">
   <div class="table-responsive px-3">
     <table class="table table-bordered table-hover">
@@ -179,12 +106,8 @@
 </c:if>
   </c:when>
   <c:otherwise>
-    <c:if test="${not empty errors.student}">
-      <p>${errors.student}</p>
-    </c:if>
 </c:otherwise>
 </c:choose>
->>>>>>> branch 'master' of https://github.com/Oharasumi2024/sms.git
 		</section>
 	</c:param>
 
