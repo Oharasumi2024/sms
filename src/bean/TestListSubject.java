@@ -1,4 +1,4 @@
-
+//学生別成績一覧
 
 package bean;
 
@@ -6,116 +6,111 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 public class TestListSubject implements Serializable {
 
-private int entYear;
+	/**
+	 * 入学年度：int
+	 */
+	private int entYear;
 
-private String studentNo;
+	/**
+	 * 学生番号：String
+	 */
+	private String studentNo;
 
-private String studentName;
+	/**
+	 * 学生名：String
+	 */
+	private String studentName;
 
-private String classNum;
+	/**
+	 * クラス：String
+	 */
+	private String classNum;
 
-<<<<<<< HEAD
-private Map<Integer, Integer> points = new HashMap<>();
-
-public int getEntYear(){
-	return entYear;
-}
-public void setYear(int entYear){
-this.entYear=entYear;
-}
-
-public String getStudentNo(){
-	return studentNo;
-}
-public void setStudentNo( String studentNo){
-	this.studentNo=studentNo;
-}
-public String getStudentName(){
-return studentName;
-
-}
-public void setStudentName(String studentName){
-	this.studentName=studentName;
-}
-public String getClassNum(){
-	return classNum;
-}
-public void setClassNum(String classNum){
-	this.classNum=classNum;
-}
-public Map<Integer,Integer> getPoints(){
-return points;
-}
-public void setPoints(Map<Integer,Integer> points){
-	this.points=points;
-}
+	/**
+	 * 回数とその得点：Map<integer,integer>
+	 */
+	private Map<Integer,Integer> points=new HashMap<>();
 
 
 
-public String getPoint(int key){
-	return  Integer.toString(points.get(key));
-}
-public void putPoint(int  key, int  value){
-=======
-private Map<Integer, Integer> points  = new  HashMap<>();
-
-public int getEntYear(){
-	return entYear;
-}
-public void setYear(int entYear){
-this.entYear=entYear;
-}
-
-public String getStudentNo(){
-	return studentNo;
-}
-public void setStudentNo( String studentNo){
-	this.studentNo=studentNo;
-}
-public String getStudentName(){
-return studentName;
-
-}
-public void setStudentName(String studentName){
-	this.studentName=studentName;
-}
-public String getClassNum(){
-	return classNum;
-}
-public void setClassNum(String classNum){
-	this.classNum=classNum;
-}
-public Map<Integer,Integer> getPoints(){
-return points;
-}
-public void setPoints(Map<Integer,Integer> points){
-	this.points=points;
-}
-
-
-public String getPoint(int key) {
-	    Integer point = points.get(key);
-	    if (point == null) {
-	        return "-"; // または空文字 "" など、表示したい未登録時の文字列
-	    }
-	    return point.toString();
+	/**
+	 * ゲッタ・セッタ
+	 */
+	public int getEntYear() {
+		return entYear;
 	}
 
-public void putPoint(int key , int value){
->>>>>>> branch 'master' of https://github.com/Oharasumi2024/sms.git
- this.points.put(key, value);
-}
+	public void setEntYear(int entYear) {
+		this.entYear = entYear;
+	}
+
+	public String getStudentNo() {
+		return studentNo;
+	}
+
+	public void setStudentNo(String studentNo) {
+		this.studentNo = studentNo;
+	}
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+
+	public String getClassNum() {
+		return classNum;
+	}
+
+	public void setClassNum(String classNum) {
+		this.classNum = classNum;
+	}
+
+	public Map<Integer,Integer> getPoints() {
+		return points;
+	}
+
+	public void setPoints(Map<Integer,Integer> points) {
+		this.points = points;
+	}
+
+	/**
+	 * キー（テスト回数）から値（点数）をゲットするメソッド
+	 * @param key テスト回数：int
+	 * @return 点数（String）
+	 */
+	public String getPoint(int key) {
+
+		// Mapインスタンスの初期化
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		// pointsフィールドから値をゲット
+		map = getPoints();
+		// キーのテスト回数から値の点数を返却
+		return Integer.toString(map.get(key));
+	}
+
+	/**
+	 * pointsフィールドにMapでテスト回数と点数をセットするメソッド
+	 * @param key テスト回数：int
+	 * @param value 点数：int
+	 */
+	public void putPoint(int key, int value) {
+
+		// Mapインスタンスの初期化
+		Map<Integer, Integer>map = new HashMap<Integer, Integer>();
+		// pointsフィールドから値をゲット
+		map = getPoints();
+		// mapにテスト回数と点数を格納
+		map.put(key, value);
+		// pointsフィールドにセット
+		setPoints(map);
+
+	}
+
 
 }
-
-
-
-
-
-
-
 
