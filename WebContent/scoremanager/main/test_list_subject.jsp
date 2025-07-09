@@ -72,14 +72,6 @@
 				</div>
 			</form>
 		</div>
-<c:if test="${not empty errors.notfound}">
-  <div>
-    ${errors.notfound}
-  </div>
-</c:if>
-
-
-
 
 <c:choose>
   <c:when test="${not empty subject}">
@@ -114,9 +106,6 @@
 </c:if>
   </c:when>
   <c:otherwise>
-    <c:if test="${not empty errors.student}">
-      <p>${errors.student}</p>
-    </c:if>
 </c:otherwise>
 </c:choose>
 		</section>

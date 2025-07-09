@@ -72,12 +72,6 @@ public class TestListSubjectExecuteAction extends Action {
 		List<Subject> list2=subjectDao.filter(teacher.getSchool());
         subject=subjectDao.get(subjectcd,teacher.getSchool());
         testlistsubjects = testlistsubjectdao.filter(entYear , classNum ,subject, teacher.getSchool());
-        if (testlistsubjects == null || testlistsubjects.isEmpty()) {
-            errors.put("notfound", "学生情報が存在しませんでした。");
-        }
-        req.setAttribute("errors", errors);
-
-
 
 		req.setAttribute("f1", entYear);
 		req.setAttribute("f2", classNum);
