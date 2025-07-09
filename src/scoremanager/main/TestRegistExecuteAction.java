@@ -61,7 +61,6 @@ public class TestRegistExecuteAction extends Action{
                 }
             } catch (NumberFormatException e) {
                 error.put(studentNo, "0～100の範囲で入力してください");
-                continue;
             }
 
             Test test = new Test();
@@ -75,22 +74,18 @@ public class TestRegistExecuteAction extends Action{
             testlist.add(test);
         }
         req.setAttribute("errors", error);
+        req.setAttribute("testlist", testlist);
         req.setAttribute("f4", count);
         req.setAttribute("f3", subject);
 
+
         if (error.isEmpty()) {
-            /* TestDaoで得点を保存する */
-        	testDao.save(testlist);
-        	req.getRequestDispatcher("test_regist_done.jsp").forward(req,res);
+            // エラーなしなら保存して完了画面へ
+            testDao.save(testlist);
+            req.getRequestDispatcher("test_regist_done.jsp").forward(req, res);
         } else {
-
-        	List<Test> testlistTo = testDao.filter(ent_year, ClassNum, subjectDao.get(subject, teacher.getSchool()), count, teacher.getSchool(5));
-        	req.setAttribute("testlist", testlistTo);
-        	req.getRequestDispatcher("test_regist.jsp").forward(req, res);
+            // エラーありなら再入力画面へ戻す
+            req.getRequestDispatcher("test_regist.jsp").forward(req, res);
         }
-
-
-
-
-
+    }
 }
