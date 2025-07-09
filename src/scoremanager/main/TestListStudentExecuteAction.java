@@ -37,7 +37,6 @@ public class TestListStudentExecuteAction extends Action {
 
 		int entYear = 0; // 入学年度
 		String student_no="";//入力された学生番号
-		List<Student> subjects = null; // 学生リスト
 		TestListStudentDao testliststudentdao=new TestListStudentDao();
 		LocalDate todaysDate = LocalDate.now(); // LocalDateインスタンスを取得
 		List<TestListStudent> testliststudent=new ArrayList<>();
@@ -46,7 +45,6 @@ public class TestListStudentExecuteAction extends Action {
 		ClassNumDao classNumDao = new ClassNumDao(); // クラス番号Daoを初期化
 		SubjectDao subjectDao=new SubjectDao();//科目DAOを初期化
 		Map<String, String> errors = new HashMap<>(); // エラーメッセージ
-		boolean isAttend=false;//在学フラグ
 
 		String searchType=req.getParameter("f");
 
@@ -79,8 +77,12 @@ public class TestListStudentExecuteAction extends Action {
 
 
 		student = studentDao.get(student_no);
-
+		if (student == null) {
+		    errors.put("student", "該当する学生が存在しません。");
+		    testliststudent = new ArrayList<>();
+		} else {
        testliststudent = testliststudentdao.filter(student);
+		}
 
 
 
@@ -95,6 +97,7 @@ public class TestListStudentExecuteAction extends Action {
         req.setAttribute("test_list",testliststudent);
         req.setAttribute("searchType", searchType);
         req.setAttribute("student",student);
+        req.setAttribute("errors", errors);
 		req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
 
 

@@ -1,4 +1,4 @@
-
+<%-- 20250709 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -43,17 +43,20 @@
 							<option value="0">--------</option>
 							<c:forEach var="subject" items="${subject_set }">
 								<%-- 現在のsubjectと選択されていたf3が一致していた場合selectedを追記 --%>
-								<option value="${subject.name }" <c:if test="${subject.name==f3 }">selected</c:if>>${subject.name }</option>
+								<option value="${subject.cd }" <c:if test="${subject.cd==f3 }">selected</c:if>>${subject.name }</option>
 							</c:forEach>
 						</select>
 					</div>
+
 					<div class="form col-2 text-center" style="display:flex; justify-content:center; align-items:center;">
 						<button class="btn btn-secondary" id="button_1">検索</button>
 					</div>
 					<div><input type="hidden" name="f" value="sj"></div>
 				</div>
 			</form>
-
+<c:if test="${not empty errors.input}">
+  <p class="text-warning">${errors.input}</p>
+</c:if>
 			<hr style="color: #dee2e6 border: none; border-top: 1px dashed #999; margin: 30px auto; width: 90%" />
 
 			<form method="get" action="TestListStudentExecute.action">
@@ -68,73 +71,47 @@
 					<div class="col-2 text-center" style="display:flex; justify-content:center; align-items:center;">
 						<button class="btn btn-secondary" id="button_2">検索</button>
 					</div>
-					<div class="col-4"><input type="hidden" name="f" value="st"></div>
+					<div class="col-4"><input type="hidden" name="f" value="sj"></div>
 				</div>
 			</form>
-			</div>
-			<c:choose>
- 				 <c:when test="${empty searchType}">
-   				 <div>
-     				 <p style="color: aqua;">
-      				  科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
-     				 </p>
-    				</div>
- 				 </c:when>
+		</div>
 
+<c:choose>
+  <c:when test="${not empty subject}">
+    <p>科目：${subject.name}</p>
 
-  				<c:when test="${searchType == 'st'}">
-   				 <jsp:include page="test_list_student.jsp" />
-  				</c:when>
-
-  				<c:when test="${searchType == 'sj'}">
-    				<jsp:include page="test_list_subject.jsp" />
-
-  				</c:when>
-			</c:choose>
-			<c:param name="scripts"></c:param>
-
-
-
-				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
-
-				<div class="col-2 text-center">
-
-
-					</div>
-					<div class="mt-2 text-warning">${errors.get("f1") }</div>
-				</div>
-
-                  	<div>氏名：${students.size() }件</div>
-					<table class="table table-hover">
-
-						<tr>
-						<th>入学年度</th>
-							<th>学生番号</th>
-							<th>クラス</th>
-							<th>氏名</th>
-							<th>1回</th>
-							<th>2回</th>
-
-
-
-						</tr>
-						<c:forEach var="subjects" items="${subjects}">
-							<tr>
-								<td>${subjects.entYear}</td>
-								<td>${subjects.studentNo }</td>
-								<td>${subjects.studentName }</td>
-								<td>${subjects.classNum }</td>
-								<td>${subjects.points1}</td>
-								<td>${subjects.points2 }
-                                 <td><td/>
-								<td class="text-center">
-
-								</td>
-								<td></td>
-							</tr>
-						</c:forEach>
-					</table>
-
+<c:if test="${not empty testlistsubjects}">
+  <div class="table-responsive px-3">
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>入学年度</th>
+        <th>クラス</th>
+        <th>学生番号</th>
+        <th>氏名</th>
+        <th>1回</th>
+        <th>2回</th>
+      </tr>
+      <c:forEach var="subjects" items="${testlistsubjects}">
+        <tr>
+          <td>${subjects.entYear}</td>
+          <td>${subjects.classNum }</td>
+          <td>${subjects.studentNo }</td>
+          <td>${subjects.studentName }</td>
+          <td>${subjects.getPoint(1) }</td>
+          <td>${subjects.getPoint(2) }</td>
+        </tr>
+      </c:forEach>
+    </table>
+  </div>
+</c:if>
+<c:if test="${empty testlistsubjects}">
+  <p class="text-danger">該当する成績情報が存在しません。</p>
+</c:if>
+  </c:when>
+  <c:otherwise>
+</c:otherwise>
+</c:choose>
 		</section>
 	</c:param>
+
 </c:import>
